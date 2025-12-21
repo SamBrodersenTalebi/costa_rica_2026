@@ -76,6 +76,69 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Image Loading Animation */
+        img {
+            transition: opacity 0.3s ease-in-out;
+        }
+        img[loading="lazy"] {
+            opacity: 0;
+        }
+        img.loaded {
+            opacity: 1;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            /* Scrollable tabs on mobile */
+            .flex.gap-8.mt-6.ml-1 {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                flex-wrap: nowrap;
+                gap: 1rem;
+                margin-left: 0;
+                padding: 0 1rem;
+                padding-bottom: 0.5rem;
+            }
+
+            .flex.gap-8.mt-6.ml-1::-webkit-scrollbar {
+                display: none;
+            }
+
+            .tab-btn {
+                white-space: nowrap;
+                font-size: 0.875rem;
+                flex-shrink: 0;
+                min-height: 44px;
+                padding: 0.75rem 1rem;
+            }
+
+            /* Single column grids */
+            .grid.md\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+
+            .grid.md\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Larger touch targets */
+            .nav-item {
+                min-height: 44px;
+                padding: 0.75rem 1rem;
+            }
+
+            /* Improved content padding */
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .p-8 {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col overflow-hidden bg-slate-50">
@@ -153,7 +216,7 @@
 
             <!-- Detail Content -->
             <div id="detail-view" class="hidden flex flex-col h-full z-10 w-full fade-in">
-                
+
                 <!-- Destination Header -->
                 <div class="bg-white px-8 py-6 border-b border-slate-200 flex-shrink-0 shadow-sm relative">
                     <div class="flex justify-between items-start">
@@ -365,15 +428,38 @@
                     { title: "Mercado Central", text: "Det centrale marked. Køb kaffe her! <a href='"+gMap("Mercado Central San Jose")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
-                    { title: "Barrio Amón Walk", text: "Byvandring. Start ved Parque Morazan, gå gennem Barrio Amóns gader med gamle villaer. (1-2 timer). <a href='"+gMap("Barrio Amon San Jose")+"' target='_blank' class='map-link'>📍 Område</a>" }
+                    {
+                        title: "Barrio Amón Walk",
+                        text: "Byvandring. Start ved Parque Morazan, gå gennem Barrio Amóns gader med gamle villaer. (1-2 timer).",
+                        alltrails: null,
+                        map: gMap("Barrio Amon San Jose")
+                    }
                 ],
                 surf: { show: false, text: "" },
                 nature: "Besøg 'Spirogyra Butterfly Garden' for en stille oase midt i byen.",
                 music: "<strong>Salsa:</strong> I SKAL på <strong>Castro's Discotheque</strong>. Det er her de lokale danser salsa. Autentisk og sjovt. <a href='"+gMap("Castros Discotheque")+"' target='_blank' class='map-link'>📍 Se kort</a>",
                 food: {
-                    break: ["Café Miel (Kaffe & Kage) <a href='"+gMap("Cafe Miel San Jose")+"' target='_blank' class='map-link'>📍</a>", "Franco (Brunch) <a href='"+gMap("Franco Restaurante")+"' target='_blank' class='map-link'>📍</a>"],
-                    lunch: ["Soda Tapia (Markedet) <a href='"+gMap("Soda Tapia Mercado Central")+"' target='_blank' class='map-link'>📍</a>", "La Ventanita (Snacks) <a href='"+gMap("La Ventanita San Jose")+"' target='_blank' class='map-link'>📍</a>"],
-                    dinner: ["Restaurante Silvestre <a href='"+gMap("Restaurante Silvestre")+"' target='_blank' class='map-link'>📍</a>", "La Esquina de Buenos Aires (Bøf) <a href='"+gMap("La Esquina de Buenos Aires")+"' target='_blank' class='map-link'>📍</a>"]
+                    break: [
+                        "Café Miel (Kaffe & Kage) <a href='"+gMap("Cafe Miel San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Franco (Brunch) <a href='"+gMap("Franco Restaurante")+"' target='_blank' class='map-link'>📍</a>",
+                        "Cafeoteca (Pancakes & Specialkaffe) <a href='"+gMap("Cafeoteca San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Pandeli Bakery (Middelhavsbrød) <a href='"+gMap("Pandeli Bakery San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Café Rojo (Specialkaffe & Bistro) <a href='"+gMap("Cafe Rojo San Jose")+"' target='_blank' class='map-link'>📍</a>"
+                    ],
+                    lunch: [
+                        "Soda Tapia (Markedet) <a href='"+gMap("Soda Tapia Mercado Central")+"' target='_blank' class='map-link'>📍</a>",
+                        "La Ventanita (Snacks) <a href='"+gMap("La Ventanita San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Café Otoya (Lokal mad & Cappuccino) <a href='"+gMap("Cafe Otoya San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Soda La Perla (Autentisk Casado) <a href='"+gMap("Soda La Perla San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Alma de Café (Coffee & Sandwich) <a href='"+gMap("Alma de Cafe San Jose")+"' target='_blank' class='map-link'>📍</a>"
+                    ],
+                    dinner: [
+                        "Restaurante Silvestre <a href='"+gMap("Restaurante Silvestre")+"' target='_blank' class='map-link'>📍</a>",
+                        "La Esquina de Buenos Aires (Bøf) <a href='"+gMap("La Esquina de Buenos Aires")+"' target='_blank' class='map-link'>📍</a>",
+                        "Amana (Fine Dining, 7-retters) <a href='"+gMap("Amana Restaurant San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "DOMA (Elegant & Romantisk) <a href='"+gMap("DOMA Restaurant San Jose")+"' target='_blank' class='map-link'>📍</a>",
+                        "Grano de Oro Restaurant (Fransk-Middelhavet) <a href='"+gMap("Grano de Oro Restaurant")+"' target='_blank' class='map-link'>📍</a>"
+                    ]
                 },
                 practical: {
                     nights: "1 nat er nok til at lande og se hovedseværdigheder. 2 nætter hvis I vil fordybe jer i kulturen.",
@@ -407,17 +493,50 @@
                     { title: "La Fortuna Vandfald", text: "Svøm ved vandfaldet. <a href='"+gMap("La Fortuna Waterfall")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
-                    { title: "Arenal 1968 Trail", text: "Vandring på gamle lavastrømme. Fantastisk udsigt. <a href='"+gMap("Arenal 1968 Volcano View and Lava Trails")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Bogarin Trail", text: "Flad rute. Det bedste sted at se dovendyr (Sloths). <a href='"+gMap("Bogarin Trail")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "El Silencio", text: "Alternativ til 1968. Mindre crowded. <a href='"+gMap("Reserva El Silencio Mirador")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    {
+                        title: "Arenal 1968 Trail",
+                        text: "Vandring på gamle lavastrømme fra 1968 udbruddet. Fantastisk udsigt til vulkanen (3 mi, 2 timer).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/alajuela/arenal-1968-volcan-sendero-bosque",
+                        map: gMap("Arenal 1968 Volcano View and Lava Trails")
+                    },
+                    {
+                        title: "Bogarin Trail",
+                        text: "Flad 1.2 mi rute. Det bedste sted at se dovendyr! Også tucaner og frøer (1 time).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/alajuela/sendero-bogarin",
+                        map: gMap("Bogarin Trail")
+                    },
+                    {
+                        title: "El Silencio Mirador",
+                        text: "Alternativ til 1968. Mindre crowded med vild jungle (2.1 mi, 1.5 timer).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/alajuela/mirador-el-silencio",
+                        map: gMap("Reserva El Silencio Mirador")
+                    }
                 ],
                 surf: { show: true, title: "Vand & Sø", text: "Ingen hav-surf, men I kan prøve <strong>Windsurfing</strong> eller <strong>SUP</strong> på Lake Arenal. <br><a href='"+gMap("Lake Arenal")+"' target='_blank' class='map-link'>📍 Se søen</a>" },
                 nature: "Kig efter tucaner tidligt om morgenen ved hotellerne.",
                 music: "<strong>Lava Lounge</strong> i centrum. Afslappet stemning, cocktails og ofte live akustisk/latin guitar. <a href='"+gMap("Lava Lounge La Fortuna")+"' target='_blank' class='map-link'>📍 Se kort</a>",
                 food: {
-                    break: ["Red Frog Coffee Roaster <a href='"+gMap("Red Frog Coffee Roaster")+"' target='_blank' class='map-link'>📍</a>", "Panaderia la Principal <a href='"+gMap("Panaderia la Principal La Fortuna")+"' target='_blank' class='map-link'>📍</a>"],
-                    lunch: ["Soda La Hormiga (Lokal) <a href='"+gMap("Soda La Hormiga")+"' target='_blank' class='map-link'>📍</a>", "Soda Viquez <a href='"+gMap("Soda Viquez")+"' target='_blank' class='map-link'>📍</a>"],
-                    dinner: ["Don Rufino (Fine Dining) <a href='"+gMap("Don Rufino")+"' target='_blank' class='map-link'>📍</a>", "Kappa Sushi <a href='"+gMap("Kappa Sushi La Fortuna")+"' target='_blank' class='map-link'>📍</a>"]
+                    break: [
+                        "Red Frog Coffee Roaster <a href='"+gMap("Red Frog Coffee Roaster")+"' target='_blank' class='map-link'>📍</a>",
+                        "Panaderia la Principal <a href='"+gMap("Panaderia la Principal La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "Arábigos Coffee House (Kaffe & Kager) <a href='"+gMap("Arabigos Coffee House La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "Harmony Organic Food (Sund morgenmad) <a href='"+gMap("Harmony Organic Food La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "Chocolate Fusión (Chokolade-pandekager) <a href='"+gMap("Chocolate Fusion La Fortuna")+"' target='_blank' class='map-link'>📍</a>"
+                    ],
+                    lunch: [
+                        "Soda La Hormiga (Lokal) <a href='"+gMap("Soda La Hormiga")+"' target='_blank' class='map-link'>📍</a>",
+                        "Soda Viquez <a href='"+gMap("Soda Viquez")+"' target='_blank' class='map-link'>📍</a>",
+                        "Soda Rodríguez (Treehouse vibe) <a href='"+gMap("Soda Rodriguez La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "Soda Sabores Lulu (Hjemmelavet) <a href='"+gMap("Soda Sabores Lulu La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "The Open Kitchen (Moderne) <a href='"+gMap("The Open Kitchen La Fortuna")+"' target='_blank' class='map-link'>📍</a>"
+                    ],
+                    dinner: [
+                        "Don Rufino (Fine Dining) <a href='"+gMap("Don Rufino")+"' target='_blank' class='map-link'>📍</a>",
+                        "Kappa Sushi <a href='"+gMap("Kappa Sushi La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "Rainforest Café (Lokal fusion) <a href='"+gMap("Rainforest Cafe La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "Anch'io (Italiensk) <a href='"+gMap("Anchio Restaurant La Fortuna")+"' target='_blank' class='map-link'>📍</a>",
+                        "La Choza de Laurel (Costa Ricansk) <a href='"+gMap("La Choza de Laurel")+"' target='_blank' class='map-link'>📍</a>"
+                    ]
                 },
                 practical: {
                     nights: "2-3 nætter. Nok tid til vulkan, varme kilder, og et par hikes/aktiviteter.",
@@ -431,6 +550,9 @@
                 icon: "🍃",
                 desc: "Tågeskoven. Køligt klima, mystik og ziplines.",
                 transport: "Fra La Fortuna: Book <strong>Jeep-Boat-Jeep</strong> ($34-73/person, ca. 3.5 timer). En smuk tur over søen og op af bjerget. Alternativt shuttle ($50).",
+                images: {
+                    hero: "https://images.unsplash.com/photo-1614026480826-ab29cb3ae66a?w=1200&h=600&fit=crop&auto=format"
+                },
                 hotels: {
                     romantic: [
                         { name: "Hotel Belmar", desc: "Alpehytte-luksus. Fantastisk solnedgangsbar.", map: "Hotel Belmar", book: "Hotel Belmar" },
@@ -450,9 +572,24 @@
                     { title: "El Tigre Waterfalls", text: "Ridning og vandfald. <a href='"+gMap("El Tigre Waterfalls Monteverde")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
-                    { title: "Reserva Curi-Cancha", text: "Bedre end hovedparken for at se Quetzal-fuglen. Mindre turistet. <a href='"+gMap("Reserva Curi-Cancha")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Bosque Nuboso Trail (Monteverde Cloud Forest)", text: "Den klassiske tågeskov ($29 voksne, $16 børn 6-12). 'Sendero Bosque Nuboso' er smuk. Nattour: $38+. <a href='"+gMap("Monteverde Cloud Forest Biological Reserve")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Cerro Amigos", text: "Gratis hike til toppen af bjerget (bag Hotel Belmar). Fantastisk solnedgang. <a href='"+gMap("Cerro Amigos")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    {
+                        title: "Reserva Curi-Cancha",
+                        text: "Bedste sted for Quetzal-fuglen! Mindre crowded end hovedparken. Max 50 personer (3-4 mi, 2-3 timer).",
+                        alltrails: "https://www.alltrails.com/parks/costa-rica/puntarenas--2/curi-cancha-reserve",
+                        map: gMap("Reserva Curi-Cancha")
+                    },
+                    {
+                        title: "Bosque Nuboso (Monteverde Cloud Forest)",
+                        text: "Den klassiske tågeskov! 50% af Costa Ricas biodiversitet. $29 voksne, $16 børn (3.6 mi, 3 timer).",
+                        alltrails: "https://www.alltrails.com/parks/costa-rica/puntarenas--2/reserva-del-bosque-nuboso-de-monteverde",
+                        map: gMap("Monteverde Cloud Forest Biological Reserve")
+                    },
+                    {
+                        title: "Cerro Amigos",
+                        text: "GRATIS cloud forest hike! Stejl stigning til toppen. Pacific udsigt på klare dage (5.1 km, 2.5 timer).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/puntarenas--2/sendero-cerro-amigos",
+                        map: gMap("Cerro Amigos")
+                    }
                 ],
                 surf: { show: false, text: "" },
                 nature: "Hold øje med den sjældne Quetzal-fugl (bedst feb-juli).",
@@ -474,6 +611,9 @@
                 icon: "🏄‍♀️",
                 desc: "Støvede veje, fantastisk surf og boho-livsstil.",
                 transport: "Fra Monteverde: Shared shuttle ($60/person, 3-6 timer) inkl. færge. Alternativt bus+færge ($12, 6h 50min). Book Tropical Tours eller anden shuttle-service.",
+                images: {
+                    hero: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop&auto=format"
+                },
                 hotels: {
                     romantic: [
                         { name: "Hotel Tropico Latino", desc: "Strand, spa og yoga.", map: "Hotel Tropico Latino", book: "Hotel Tropico Latino" },
@@ -493,8 +633,18 @@
                     { title: "Yoga hos Horizon", text: "Yoga med havudsigt. <a href='"+gMap("Horizon Hotel & Yoga Center")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
-                    { title: "Cabo Blanco Reserve", text: "Costa Ricas første nationalpark. En hård men smuk tur til en øde strand (5km hver vej). Lukket mandag/tirsdag. <a href='"+gMap("Reserva Natural Absoluta Cabo Blanco")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Montezuma Waterfall", text: "Kør på ATV til Montezuma. Vandretur op til vandfaldet. Kan være glat! <a href='"+gMap("Montezuma Waterfalls")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    {
+                        title: "Cabo Blanco Reserve",
+                        text: "Costa Ricas første nationalpark! Hård hike til øde strand (5.5 mi, 3 timer). Lukket man/tir.",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/puntarenas--2/playa-cabo-blanco",
+                        map: gMap("Reserva Natural Absoluta Cabo Blanco")
+                    },
+                    {
+                        title: "Montezuma Waterfall",
+                        text: "Smuk 20m vandfald med naturlig pool til svømning. Teknisk terræn (1.1 mi, 35 min).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/puntarenas--2/montezuma-falls",
+                        map: gMap("Montezuma Waterfalls")
+                    }
                 ],
                 surf: { show: true, title: "Surf Guide", text: "<strong>Playa Carmen:</strong> Intermediate. <br><strong>Playa Hermosa:</strong> Begyndere/Longboard. <br><br><strong>Priser:</strong> Gruppe lektioner $60-80, Privat $80. Surfboard leje $10-15/dag. 5-dages pakker fra $52/dag. <br>Book lektioner hos 'Del Soul'. <a href='"+gMap("Del Soul Surf School")+"' target='_blank' class='map-link'>📍 Link</a>" },
                 nature: "Tidevandspools ved Mal Pais er fulde af liv ved lavvande.",
@@ -516,6 +666,9 @@
                 icon: "🐒",
                 desc: "Jungle møder strand. Nationalparken er fuld af dyr.",
                 transport: "Fra Santa Teresa: Shuttle + Færge + Shuttle (6 timer). <br>Fra Monteverde: Shuttle (4 timer).",
+                images: {
+                    hero: "https://images.unsplash.com/photo-1576485290814-1c72aa4d0e55?w=1200&h=600&fit=crop&auto=format"
+                },
                 hotels: {
                     romantic: [
                         { name: "Shana by the Beach", desc: "Tæt på Biesanz strand.", map: "Shana by the Beach", book: "Shana by the Beach" },
@@ -535,8 +688,18 @@
                     { title: "Spice Farm Tour", text: "Villa Vanilla (Vanilje farm). <a href='"+gMap("Villa Vanilla Spice Farm")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
-                    { title: "Punta Catedral", text: "Inde i nationalparken. En rundtur på en 'ø' forbundet til fastlandet. Ikonisk udsigt. <a href='"+gMap("Punta Catedral Manuel Antonio")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Rainmaker Park", text: "Hængebroer og vandfald (mindre crowded end hovedparken). <a href='"+gMap("Rainmaker Conservation Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    {
+                        title: "Punta Catedral",
+                        text: "Rundtur i nationalparken. Panoramaudsigt + aber, iguaner, fugle (2.9 mi, 2 timer).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/puntarenas--2/punta-catedral",
+                        map: gMap("Punta Catedral Manuel Antonio")
+                    },
+                    {
+                        title: "Rainmaker Park",
+                        text: "Hængebroer, vandfald og regnskov. Mindre crowded! 30 min fra Manuel Antonio (1 mi, 1 time).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/puntarenas--2/rainmaker-park",
+                        map: gMap("Rainmaker Conservation Park")
+                    }
                 ],
                 surf: { show: true, title: "Surf Guide", text: "<strong>Playa Espadilla:</strong> Hovedstranden. God til begyndere. Lej board på stranden. <a href='"+gMap("Playa Espadilla")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                 nature: "Aberne her er frække - pas på tasken!",
@@ -558,6 +721,9 @@
                 icon: "🌴",
                 desc: "Caribien. Reggae, kokosmælk og afslappet vibe.",
                 transport: "Fra San José: 'Caribe Shuttle' ($55). Tager 4.5 time.",
+                images: {
+                    hero: "https://images.unsplash.com/photo-1589197331516-7c94d28504f6?w=1200&h=600&fit=crop&auto=format"
+                },
                 hotels: {
                     romantic: [
                         { name: "Banana Azul", desc: "Adults Only på stranden.", map: "Hotel Banana Azul", book: "Hotel Banana Azul" },
@@ -577,8 +743,18 @@
                     { title: "Ara Manzanillo", text: "Genudsætning af grønne papegøjer. <a href='"+gMap("Ara Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
-                    { title: "Cahuita Nationalpark", text: "Helt flad rute langs kysten. Meget nem, men utrolig smuk. Man ser ofte aber og vaskebjørne. <a href='"+gMap("Cahuita National Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Gandoca-Manzanillo Refuge", text: "Mere vildt. Stien går fra Manzanillo by langs kysten. Kan være mudret! <a href='"+gMap("Refugio Nacional Gandoca-Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    {
+                        title: "Cahuita Nationalpark",
+                        text: "Flad kyststig med hvide strande. Se aber, dovendyr, vaskebjørne! (5.2 mi, 2.5 timer).",
+                        alltrails: "https://www.alltrails.com/trail/costa-rica/limon/sendero-de-la-punta-cahuita",
+                        map: gMap("Cahuita National Park")
+                    },
+                    {
+                        title: "Gandoca-Manzanillo Refuge",
+                        text: "Vildt kystområde gennem jungle og mangrove. Kan være mudret (6 mi, 3-4 timer).",
+                        alltrails: "https://www.alltrails.com/parks/costa-rica/limon/gandoca-manzanillo-national-wildlife-refuge",
+                        map: gMap("Refugio Nacional Gandoca-Manzanillo")
+                    }
                 ],
                 surf: { show: true, title: "Surf Guide", text: "<strong>Salsa Brava:</strong> Eksperter (Rev). <br><strong>Playa Cocles:</strong> Intermediate. <a href='"+gMap("Playa Cocles")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                 nature: "Dovendyr hænger ofte i træerne langs vejen.",
@@ -658,12 +834,15 @@
 
             // Render Hotels
             const renderHotel = (h) => `
-                <div class="bg-white p-5 rounded-xl border border-slate-200 transition relative group hover:shadow-md">
-                    <h4 class="font-bold text-slate-800 text-lg mb-1">${h.name}</h4>
-                    <p class="text-xs text-slate-500 mb-4">${h.desc}</p>
-                    <div class="flex gap-2">
-                        <a href="${gMap(h.map)}" target="_blank" class="flex-1 text-center bg-slate-100 text-slate-700 text-xs font-bold py-2 rounded hover:bg-slate-200">📍 Kort</a>
-                        <a href="${booking(h.book)}" target="_blank" class="flex-1 text-center bg-teal-700 text-white text-xs font-bold py-2 rounded hover:bg-teal-800">📅 Book</a>
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden transition relative group hover:shadow-md">
+                    ${h.image ? `<img src="${h.image}" alt="${h.name}" class="w-full h-48 object-cover" loading="lazy" onload="this.classList.add('loaded')">` : ''}
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-1">${h.name}</h4>
+                        <p class="text-xs text-slate-500 mb-4">${h.desc}</p>
+                        <div class="flex gap-2">
+                            <a href="${gMap(h.map)}" target="_blank" class="flex-1 text-center bg-slate-100 text-slate-700 text-xs font-bold py-2 rounded hover:bg-slate-200">📍 Kort</a>
+                            <a href="${booking(h.book)}" target="_blank" class="flex-1 text-center bg-teal-700 text-white text-xs font-bold py-2 rounded hover:bg-teal-800">📅 Book</a>
+                        </div>
                     </div>
                 </div>
             `;
@@ -686,9 +865,13 @@
                 document.getElementById('list-hikes').innerHTML = dest.hikes.map(a => `
                     <div class="flex gap-4 items-start pb-4 border-b border-slate-100 last:border-0">
                         <div class="bg-green-100 text-green-700 p-2 rounded-lg mt-1"><i class="ph-bold ph-person-simple-hike"></i></div>
-                        <div>
+                        <div class="flex-1">
                             <div class="font-bold text-slate-800 text-sm">${a.title}</div>
                             <div class="text-xs text-slate-600 mt-1 leading-relaxed">${a.text}</div>
+                            <div class="mt-2 flex gap-3 flex-wrap">
+                                ${a.alltrails ? `<a href="${a.alltrails}" target="_blank" class="text-teal-700 font-bold text-xs hover:underline inline-flex items-center gap-1">🥾 AllTrails Info</a>` : ''}
+                                <a href="${a.map}" target="_blank" class="text-slate-500 text-xs hover:underline inline-flex items-center gap-1">📍 Directions</a>
+                            </div>
                         </div>
                     </div>
                 `).join('');
