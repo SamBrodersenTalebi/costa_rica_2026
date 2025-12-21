@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costa Rica 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #F8FAFC;
+            color: #334155;
+        }
+        
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Links styling */
+        a.map-link {
+            color: #059669;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            margin-top: 4px;
+        }
+        a.map-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Smooth scrollbar */
+        .scroller::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scroller::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        .scroller::-webkit-scrollbar-thumb {
+            background: #CBD5E1; 
+            border-radius: 10px;
+        }
+
+        /* Interactive Tabs */
+        .tab-btn {
+            padding-bottom: 0.5rem;
+            color: #94A3B8;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover {
+            color: #0F172A;
+        }
+        .tab-btn.active {
+            color: #0F766E; /* Teal 700 */
+            border-color: #0F766E;
+            font-weight: 700;
+        }
+
+        .nav-item.active {
+            background-color: #F0FDFA;
+            border-left: 4px solid #0F766E;
+            color: #0F766E;
+        }
+        
+        /* Fade Animation */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden bg-slate-50">
+
+    <!-- Topbar -->
+    <nav class="bg-white border-b border-slate-200 h-16 flex-shrink-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="ph-duotone ph-airplane-tilt text-3xl text-teal-700"></i>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900 tracking-tight serif">Costa Rica 2026</h1>
+                    <p class="text-[10px] text-slate-500 uppercase tracking-widest">CPH ⇄ SJO • Feb/Mar</p>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex gap-6 text-sm font-medium text-slate-600">
+                <span class="flex items-center gap-1"><i class="ph-fill ph-map-pin text-teal-600"></i> 10-14 Dage</span>
+                <span class="flex items-center gap-1"><i class="ph-fill ph-waves text-teal-600"></i> Surf & Natur</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full h-[calc(100vh-64px)] overflow-hidden">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-72 bg-white border-r border-slate-200 flex flex-col h-full overflow-y-auto scroller z-20">
+            <div class="p-5">
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Vælg Rejserute</h2>
+                
+                <div class="flex bg-slate-100 p-1 rounded-lg mb-6 shadow-inner">
+                    <button onclick="setRoute('pacific')" id="btn-pacific" class="flex-1 py-2 text-xs font-bold rounded shadow-sm bg-white text-teal-800">Stillehavet</button>
+                    <button onclick="setRoute('coast')" id="btn-coast" class="flex-1 py-2 text-xs font-bold rounded text-slate-500 hover:text-teal-800">Kyst-til-Kyst</button>
+                </div>
+
+                <div id="route-container" class="space-y-1">
+                    <!-- Route buttons injected here -->
+                </div>
+
+                <!-- Global Transport Tip -->
+                <div class="mt-8 bg-teal-50 p-4 rounded-xl border border-teal-100">
+                    <h4 class="font-bold text-teal-900 text-sm mb-2 flex items-center gap-2"><i class="ph-fill ph-bus"></i> Transport Info</h4>
+                    <p class="text-xs text-teal-800 leading-relaxed">
+                        Anbefalet transport mellem byer er <strong>Shared Shuttles</strong> (minibusser med A/C). 
+                        <br><br>
+                        <a href="https://www.interbusonline.com/" target="_blank" class="underline font-bold hover:text-teal-600">🔗 Interbus</a> eller <a href="https://www.tropicaltourshuttles.com/" target="_blank" class="underline font-bold hover:text-teal-600">🔗 Tropical Tours</a>.
+                        <br>Book altid 2 dage før.
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <section class="flex-1 relative flex flex-col bg-slate-50 h-full overflow-hidden">
+            
+            <!-- Empty State Placeholder -->
+            <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-300 z-0">
+                <i class="ph-duotone ph-compass text-6xl mb-4"></i>
+                <p class="serif text-xl text-slate-400">Vælg en destination for at starte eventyret</p>
+            </div>
+
+            <!-- Detail Content -->
+            <div id="detail-view" class="hidden flex flex-col h-full z-10 w-full fade-in">
+                
+                <!-- Destination Header -->
+                <div class="bg-white px-8 py-6 border-b border-slate-200 flex-shrink-0 shadow-sm relative">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <span id="dest-icon" class="text-3xl"></span>
+                                <h2 id="dest-title" class="text-3xl serif text-slate-900"></h2>
+                            </div>
+                            <p id="dest-desc" class="text-slate-500 max-w-2xl text-sm leading-relaxed ml-11"></p>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="flex gap-8 mt-6 ml-1">
+                        <button onclick="switchTab('hotels')" id="tab-hotels" class="tab-btn active text-sm">🏨 Overnatning</button>
+                        <button onclick="switchTab('activities')" id="tab-activities" class="tab-btn text-sm">🥾 Aktiviteter & Hikes</button>
+                        <button onclick="switchTab('romantic')" id="tab-romantic" class="tab-btn text-sm">❤️ Romantik</button>
+                        <button onclick="switchTab('food')" id="tab-food" class="tab-btn text-sm">🍽️ Mad & Musik</button>
+                    </div>
+                </div>
+
+                <!-- Scrollable Tab Content -->
+                <div class="flex-1 overflow-y-auto scroller p-8">
+                    
+                    <!-- Logistic Box (Always Visible top of content) -->
+                    <div class="mb-8 p-4 bg-white border-l-4 border-teal-500 shadow-sm rounded-r-lg flex gap-4 items-start">
+                        <i class="ph-duotone ph-path text-2xl text-teal-600 mt-1"></i>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Logistik: Sådan kommer I herhen</h4>
+                            <p id="dest-transport" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <!-- TAB: HOTELS -->
+                    <div id="content-hotels" class="tab-content space-y-8">
+                        <!-- Romantic Tier -->
+                        <div>
+                            <h3 class="serif text-lg text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="bg-rose-100 text-rose-600 p-1 rounded"><i class="ph-fill ph-heart"></i></span>
+                                Romantisk & Mellemklasse (Anbefalet)
+                            </h3>
+                            <div id="list-hotels-romantic" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                        </div>
+                        <!-- Budget Tier -->
+                        <div>
+                            <h3 class="serif text-lg text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="bg-amber-100 text-amber-600 p-1 rounded"><i class="ph-fill ph-coins"></i></span>
+                                Budget & Socialt
+                            </h3>
+                            <div id="list-hotels-budget" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: ACTIVITIES -->
+                    <div id="content-activities" class="tab-content hidden space-y-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Main Activities -->
+                            <div>
+                                <h3 class="serif text-lg text-slate-800 mb-4 flex items-center gap-2">
+                                    <i class="ph-fill ph-star text-yellow-500"></i> Højdepunkter
+                                </h3>
+                                <div id="list-activities" class="space-y-4"></div>
+
+                                <h3 class="serif text-lg text-slate-800 mb-4 mt-8 flex items-center gap-2">
+                                    <i class="ph-fill ph-person-simple-hike text-green-600"></i> Bedste Hikes
+                                </h3>
+                                <div id="list-hikes" class="space-y-4"></div>
+                            </div>
+
+                            <!-- Surf/Water & Nature Tip -->
+                            <div class="space-y-6">
+                                <div id="surf-container" class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                                    <h3 class="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                                        <i class="ph-fill ph-waves"></i> <span id="surf-title">Vand & Surf</span>
+                                    </h3>
+                                    <div id="surf-info" class="text-sm text-blue-800 space-y-2"></div>
+                                </div>
+                                
+                                <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100">
+                                    <h3 class="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                                        <i class="ph-fill ph-plant"></i> Natur Tip
+                                    </h3>
+                                    <p id="nature-tip" class="text-sm text-emerald-800"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: ROMANTIC -->
+                    <div id="content-romantic" class="tab-content hidden space-y-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- The Date -->
+                            <div class="bg-white p-6 rounded-xl border border-rose-100 shadow-sm relative overflow-hidden">
+                                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-rose-50 rounded-full opacity-50"></div>
+                                <h3 class="serif text-xl text-rose-900 mb-4 relative z-10">Den Perfekte Date</h3>
+                                <div id="romantic-date" class="text-sm text-slate-600 space-y-4 leading-relaxed relative z-10"></div>
+                            </div>
+                            <!-- Extras -->
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <h3 class="serif text-xl text-slate-800 mb-4">Det lille ekstra</h3>
+                                <ul id="romantic-extras" class="space-y-3 text-sm text-slate-600"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: FOOD & MUSIC -->
+                    <div id="content-food" class="tab-content hidden space-y-8">
+                        <!-- Music Box -->
+                        <div class="bg-purple-50 p-5 rounded-xl border border-purple-100 flex gap-4 items-start">
+                            <div class="bg-purple-200 text-purple-800 p-2 rounded-lg"><i class="ph-fill ph-music-notes-simple text-xl"></i></div>
+                            <div>
+                                <h3 class="font-bold text-purple-900 text-sm uppercase tracking-wide mb-1">Musik & Nightlife</h3>
+                                <p id="music-info" class="text-sm text-purple-900"></p>
+                            </div>
+                        </div>
+
+                        <!-- Food Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Breakfast -->
+                            <div class="bg-white p-5 rounded-xl border border-slate-200 hover:border-teal-400 transition shadow-sm group">
+                                <h4 class="font-bold text-slate-800 mb-3 group-hover:text-teal-700 transition">Morgenmad</h4>
+                                <ul id="food-break" class="space-y-3 text-sm text-slate-600"></ul>
+                            </div>
+                            <!-- Lunch -->
+                            <div class="bg-white p-5 rounded-xl border border-slate-200 hover:border-teal-400 transition shadow-sm group">
+                                <h4 class="font-bold text-slate-800 mb-3 group-hover:text-teal-700 transition">Frokost (Lokalt)</h4>
+                                <ul id="food-lunch" class="space-y-3 text-sm text-slate-600"></ul>
+                            </div>
+                            <!-- Dinner -->
+                            <div class="bg-white p-5 rounded-xl border border-slate-200 hover:border-teal-400 transition shadow-sm group">
+                                <h4 class="font-bold text-slate-800 mb-3 group-hover:text-teal-700 transition">Aftensmad</h4>
+                                <ul id="food-dinner" class="space-y-3 text-sm text-slate-600"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Logic Engine -->
+    <script>
+        // --- HELPER FUNCTIONS ---
+        const gMap = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query + " Costa Rica")}`;
+        const booking = (query) => `https://www.booking.com/searchresults.html?ss=${encodeURIComponent(query)}`;
+        
+        // --- DATA ---
+        const data = {
+            sjo: {
+                title: "San José",
+                icon: "🏙️",
+                desc: "Hovedstaden. Brug en dag på at lande, mærk kulturen og find rytmen.",
+                transport: "Fra SJO Lufthavn: Tag en officiel orange taxa eller Uber til centrum ($25-30, 30 min).",
+                hotels: {
+                    romantic: [
+                        { name: "Hotel Grano de Oro", desc: "Victoriansk luksus. Byens smukkeste gårdhave.", map: "Hotel Grano de Oro", book: "Hotel Grano de Oro" },
+                        { name: "Hotel Presidente", desc: "Industrielt design midt på gågaden. Flot rooftop.", map: "Hotel Presidente San Jose", book: "Hotel Presidente San Jose" }
+                    ],
+                    budget: [
+                        { name: "Selina San Jose", desc: "Barrio Otoya. Hipster vibe, musik og co-working.", map: "Selina San Jose", book: "Selina San Jose" },
+                        { name: "Fauna Hostel", desc: "Escazu. Moderne, rent og med pool.", map: "Fauna Hostel Costa Rica", book: "Fauna Hostel" }
+                    ]
+                },
+                romantic: {
+                    date: "Start på <strong>Gran Hotel Costa Rica</strong> (5. sal) med en cocktail og udsigt over Nationalteatret <a href='"+gMap("Gran Hotel Costa Rica")+"' target='_blank' class='map-link'>📍 Se kort</a>. Gå derefter til middag på <strong>Restaurante Silvestre</strong> i Barrio Amón.",
+                    extras: ["Chokoladesmagning hos 'Sibú Chocolate' <a href='"+gMap("Sibu Chocolate")+"' target='_blank' class='map-link'>📍 Link</a>", "Gåtur i Barrio Amón for at se arkitektur."]
+                },
+                activities: [
+                    { title: "Guldmuséet", text: "Underground museum med præcolumbiansk guld. <a href='"+gMap("Museo del Oro Precolombino")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Mercado Central", text: "Det centrale marked. Køb kaffe her! <a href='"+gMap("Mercado Central San Jose")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                hikes: [
+                    { title: "Barrio Amón Walk", text: "Byvandring. Start ved Parque Morazan, gå gennem Barrio Amóns gader med gamle villaer. (1-2 timer). <a href='"+gMap("Barrio Amon San Jose")+"' target='_blank' class='map-link'>📍 Område</a>" }
+                ],
+                surf: { show: false, text: "" },
+                nature: "Besøg 'Spirogyra Butterfly Garden' for en stille oase midt i byen.",
+                music: "<strong>Salsa:</strong> I SKAL på <strong>Castro's Discotheque</strong>. Det er her de lokale danser salsa. Autentisk og sjovt. <a href='"+gMap("Castros Discotheque")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                food: {
+                    break: ["Café Miel (Kaffe & Kage) <a href='"+gMap("Cafe Miel San Jose")+"' target='_blank' class='map-link'>📍</a>", "Franco (Brunch) <a href='"+gMap("Franco Restaurante")+"' target='_blank' class='map-link'>📍</a>"],
+                    lunch: ["Soda Tapia (Markedet) <a href='"+gMap("Soda Tapia Mercado Central")+"' target='_blank' class='map-link'>📍</a>", "La Ventanita (Snacks) <a href='"+gMap("La Ventanita San Jose")+"' target='_blank' class='map-link'>📍</a>"],
+                    dinner: ["Restaurante Silvestre <a href='"+gMap("Restaurante Silvestre")+"' target='_blank' class='map-link'>📍</a>", "La Esquina de Buenos Aires (Bøf) <a href='"+gMap("La Esquina de Buenos Aires")+"' target='_blank' class='map-link'>📍</a>"]
+                }
+            },
+            lafortuna: {
+                title: "La Fortuna",
+                icon: "🌋",
+                desc: "Eventyrhovedstaden ved vulkanen Arenal. Varme kilder og jungle.",
+                transport: "Fra San José: 'Interbus' shuttle ($57/person). Tager 3.5 time. Afhentning på hotel.",
+                hotels: {
+                    romantic: [
+                        { name: "Hotel Los Lagos", desc: "Egne varme kilder og udsigt til vulkan.", map: "Hotel Los Lagos", book: "Hotel Los Lagos Spa & Resort" },
+                        { name: "Arenal Manoa", desc: "Bungalows med direkte udsigt fra sengen.", map: "Arenal Manoa", book: "Arenal Manoa" }
+                    ],
+                    budget: [
+                        { name: "Selina La Fortuna", desc: "Tipier, pool og central beliggenhed.", map: "Selina La Fortuna", book: "Selina La Fortuna" },
+                        { name: "La Choza Inn", desc: "Backpacker klassiker. Billigt.", map: "La Choza Inn", book: "La Choza Inn" }
+                    ]
+                },
+                romantic: {
+                    date: "Aftenpas til <strong>EcoTermales Fortuna</strong>. De mest intime varme kilder med begrænset adgang. Stearinlys i junglen. <a href='https://ecotermalesfortuna.cr/' target='_blank' class='map-link'>🔗 Book Tid</a>",
+                    extras: ["Chokoladetur hos 'Rainforest Chocolate Tour' <a href='"+gMap("Rainforest Chocolate Tour")+"' target='_blank' class='map-link'>📍 Link</a>", "Privat middag på 'Don Rufino'."]
+                },
+                activities: [
+                    { title: "Mistico Hanging Bridges", text: "Gå på broer i trætoppene. <a href='"+gMap("Mistico Arenal Hanging Bridges Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Rio Celeste", text: "Lyseblå flod/vandfald. <a href='"+gMap("Rio Celeste Waterfall")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "La Fortuna Vandfald", text: "Svøm ved vandfaldet. <a href='"+gMap("La Fortuna Waterfall")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                hikes: [
+                    { title: "Arenal 1968 Trail", text: "Vandring på gamle lavastrømme. Fantastisk udsigt. <a href='"+gMap("Arenal 1968 Volcano View and Lava Trails")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Bogarin Trail", text: "Flad rute. Det bedste sted at se dovendyr (Sloths). <a href='"+gMap("Bogarin Trail")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "El Silencio", text: "Alternativ til 1968. Mindre crowded. <a href='"+gMap("Reserva El Silencio Mirador")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                surf: { show: true, title: "Vand & Sø", text: "Ingen hav-surf, men I kan prøve <strong>Windsurfing</strong> eller <strong>SUP</strong> på Lake Arenal. <br><a href='"+gMap("Lake Arenal")+"' target='_blank' class='map-link'>📍 Se søen</a>" },
+                nature: "Kig efter tucaner tidligt om morgenen ved hotellerne.",
+                music: "<strong>Lava Lounge</strong> i centrum. Afslappet stemning, cocktails og ofte live akustisk/latin guitar. <a href='"+gMap("Lava Lounge La Fortuna")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                food: {
+                    break: ["Red Frog Coffee Roaster <a href='"+gMap("Red Frog Coffee Roaster")+"' target='_blank' class='map-link'>📍</a>", "Panaderia la Principal <a href='"+gMap("Panaderia la Principal La Fortuna")+"' target='_blank' class='map-link'>📍</a>"],
+                    lunch: ["Soda La Hormiga (Lokal) <a href='"+gMap("Soda La Hormiga")+"' target='_blank' class='map-link'>📍</a>", "Soda Viquez <a href='"+gMap("Soda Viquez")+"' target='_blank' class='map-link'>📍</a>"],
+                    dinner: ["Don Rufino (Fine Dining) <a href='"+gMap("Don Rufino")+"' target='_blank' class='map-link'>📍</a>", "Kappa Sushi <a href='"+gMap("Kappa Sushi La Fortuna")+"' target='_blank' class='map-link'>📍</a>"]
+                }
+            },
+            monteverde: {
+                title: "Monteverde",
+                icon: "🍃",
+                desc: "Tågeskoven. Køligt klima, mystik og ziplines.",
+                transport: "Fra La Fortuna: Book <strong>Jeep-Boat-Jeep</strong> ($25). En smuk tur over søen og op af bjerget (3 timer).",
+                hotels: {
+                    romantic: [
+                        { name: "Hotel Belmar", desc: "Alpehytte-luksus. Fantastisk solnedgangsbar.", map: "Hotel Belmar", book: "Hotel Belmar" },
+                        { name: "Senda Monteverde", desc: "Moderne luksus tæt på reservatet.", map: "Senda Monteverde", book: "Senda Monteverde" }
+                    ],
+                    budget: [
+                        { name: "Camino Verde B&B", desc: "God udsigt og morgenmad.", map: "Camino Verde Bed and Breakfast", book: "Camino Verde Monteverde" },
+                        { name: "Pension Santa Elena", desc: "Hygge midt i byen.", map: "Pension Santa Elena", book: "Pension Santa Elena" }
+                    ]
+                },
+                romantic: {
+                    date: "Middag på <strong>San Lucas Treetop Dining</strong>. 7-retters menu i en glasboks i træerne. <a href='https://www.sanlucas.cr/' target='_blank' class='map-link'>🔗 Book Bord</a>",
+                    extras: ["Nattur i skoven med 'Kinkajou Night Walk' <a href='"+gMap("Kinkajou Night Walk")+"' target='_blank' class='map-link'>📍 Link</a>", "Drinks på Belmar's 'Celajes' balkon."]
+                },
+                activities: [
+                    { title: "Selvatura Park", text: "Bedste Ziplines & Hængebroer. <a href='"+gMap("Selvatura Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "El Tigre Waterfalls", text: "Ridning og vandfald. <a href='"+gMap("El Tigre Waterfalls Monteverde")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                hikes: [
+                    { title: "Reserva Curi-Cancha", text: "Bedre end hovedparken for at se Quetzal-fuglen. Mindre turistet. <a href='"+gMap("Reserva Curi-Cancha")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Bosque Nuboso Trail", text: "Den klassiske tågeskov. 'Sendero Bosque Nuboso' er smuk. <a href='"+gMap("Monteverde Cloud Forest Biological Reserve")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Cerro Amigos", text: "Gratis hike til toppen af bjerget (bag Hotel Belmar). Fantastisk solnedgang. <a href='"+gMap("Cerro Amigos")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                surf: { show: false, text: "" },
+                nature: "Hold øje med den sjældne Quetzal-fugl (bedst feb-juli).",
+                music: "<strong>Bar Amigos</strong>. Det lokale sted med billard og kold øl. Nogle gange live bands (rock/latin). <a href='"+gMap("Bar Amigos Monteverde")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                food: {
+                    break: ["Stella's Bakery <a href='"+gMap("Stellas Bakery Monteverde")+"' target='_blank' class='map-link'>📍</a>", "Choco Café <a href='"+gMap("Choco Cafe Don Juan")+"' target='_blank' class='map-link'>📍</a>"],
+                    lunch: ["Taco Taco <a href='"+gMap("Taco Taco Monteverde")+"' target='_blank' class='map-link'>📍</a>", "Sabor Tico <a href='"+gMap("Sabor Tico Monteverde")+"' target='_blank' class='map-link'>📍</a>"],
+                    dinner: ["Tree House Restaurant <a href='"+gMap("Tree House Restaurant Monteverde")+"' target='_blank' class='map-link'>📍</a>", "Tramonti (Italiensk) <a href='"+gMap("Tramonti Monteverde")+"' target='_blank' class='map-link'>📍</a>"]
+                }
+            },
+            teresa: {
+                title: "Santa Teresa",
+                icon: "🏄‍♀️",
+                desc: "Støvede veje, fantastisk surf og boho-livsstil.",
+                transport: "Fra Monteverde: Shuttle til Puntarenas -> Færge -> Shuttle til Santa Teresa. Book 'Tropical Tours' ($60). Tager 4-5 timer.",
+                hotels: {
+                    romantic: [
+                        { name: "Hotel Tropico Latino", desc: "Strand, spa og yoga.", map: "Hotel Tropico Latino", book: "Hotel Tropico Latino" },
+                        { name: "Esencia Hotel", desc: "Stille villaer med pool.", map: "Esencia Hotel Santa Teresa", book: "Esencia Hotel" }
+                    ],
+                    budget: [
+                        { name: "Selina Santa Teresa North", desc: "Party og pool.", map: "Selina Santa Teresa North", book: "Selina Santa Teresa North" },
+                        { name: "Lost Boyz", desc: "Socialt hostel.", map: "Lost Boyz Santa Teresa", book: "Lost Boyz" }
+                    ]
+                },
+                romantic: {
+                    date: "Lej en ATV og kør til <strong>Mal País</strong> ved lavvande. Find de naturlige pools ('Mar Azul') og se solnedgangen. <a href='"+gMap("Mar Azul Mal Pais")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                    extras: ["Par-massage på Tropico Latino.", "Middag på 'Koji's'."]
+                },
+                activities: [
+                    { title: "Tortuga Island Tur", text: "Snorkling og hvidt sand. Book via 'Zuma Tours'. <a href='"+gMap("Zuma Tours Santa Teresa")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Yoga hos Horizon", text: "Yoga med havudsigt. <a href='"+gMap("Horizon Hotel & Yoga Center")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                hikes: [
+                    { title: "Cabo Blanco Reserve", text: "Costa Ricas første nationalpark. En hård men smuk tur til en øde strand (5km hver vej). Lukket mandag/tirsdag. <a href='"+gMap("Reserva Natural Absoluta Cabo Blanco")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Montezuma Waterfall", text: "Kør på ATV til Montezuma. Vandretur op til vandfaldet. Kan være glat! <a href='"+gMap("Montezuma Waterfalls")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                surf: { show: true, title: "Surf Guide", text: "<strong>Playa Carmen:</strong> Intermediate. <br><strong>Playa Hermosa:</strong> Begyndere/Longboard. <br>Book lektioner hos 'Del Soul'. <a href='"+gMap("Del Soul Surf School")+"' target='_blank' class='map-link'>📍 Link</a>" },
+                nature: "Tidevandspools ved Mal Pais er fulde af liv ved lavvande.",
+                music: "<strong>La Lora Amarilla</strong>. Det legendariske sted. Reggae nights, Salsa og DJ. <a href='"+gMap("La Lora Amarilla")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                food: {
+                    break: ["The Bakery <a href='"+gMap("The Bakery Santa Teresa")+"' target='_blank' class='map-link'>📍</a>", "Ani's Bowls <a href='"+gMap("Anis Bowls")+"' target='_blank' class='map-link'>📍</a>"],
+                    lunch: ["Eat Street <a href='"+gMap("Eat Street Santa Teresa")+"' target='_blank' class='map-link'>📍</a>", "Soda Tiquicia <a href='"+gMap("Soda Tiquicia Santa Teresa")+"' target='_blank' class='map-link'>📍</a>"],
+                    dinner: ["Katana (Asiatisk) <a href='"+gMap("Katana Santa Teresa")+"' target='_blank' class='map-link'>📍</a>", "Al Chile Viola (Italiensk) <a href='"+gMap("Al Chile Viola")+"' target='_blank' class='map-link'>📍</a>"]
+                }
+            },
+            manuel: {
+                title: "Manuel Antonio",
+                icon: "🐒",
+                desc: "Jungle møder strand. Nationalparken er fuld af dyr.",
+                transport: "Fra Santa Teresa: Shuttle + Færge + Shuttle (6 timer). <br>Fra Monteverde: Shuttle (4 timer).",
+                hotels: {
+                    romantic: [
+                        { name: "Shana by the Beach", desc: "Tæt på Biesanz strand.", map: "Shana by the Beach", book: "Shana by the Beach" },
+                        { name: "La Mariposa", desc: "Bedste udsigt i byen.", map: "Hotel La Mariposa", book: "Hotel La Mariposa Manuel Antonio" }
+                    ],
+                    budget: [
+                        { name: "Selina Manuel Antonio", desc: "Ved parkindgangen.", map: "Selina Manuel Antonio", book: "Selina Manuel Antonio" },
+                        { name: "Teva Jungle Hotel", desc: "Billigt.", map: "Teva Jungle Hotel", book: "Teva Jungle Hotel" }
+                    ]
+                },
+                romantic: {
+                    date: "Drink ved solnedgang på <strong>El Avión</strong> (et fly!). Spis derefter på <strong>Emilio's Café</strong> (bedre mad). <a href='"+gMap("El Avion Manuel Antonio")+"' target='_blank' class='map-link'>📍 Flyet</a>",
+                    extras: ["Sunset Sail katamaran tur.", "Picnic på Biesanz Beach."]
+                },
+                activities: [
+                    { title: "Nationalparken", text: "Book guide for at se dovendyr. <a href='"+gMap("Manuel Antonio National Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Spice Farm Tour", text: "Villa Vanilla (Vanilje farm). <a href='"+gMap("Villa Vanilla Spice Farm")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                hikes: [
+                    { title: "Punta Catedral", text: "Inde i nationalparken. En rundtur på en 'ø' forbundet til fastlandet. Ikonisk udsigt. <a href='"+gMap("Punta Catedral Manuel Antonio")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Rainmaker Park", text: "Hængebroer og vandfald (mindre crowded end hovedparken). <a href='"+gMap("Rainmaker Conservation Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                surf: { show: true, title: "Surf Guide", text: "<strong>Playa Espadilla:</strong> Hovedstranden. God til begyndere. Lej board på stranden. <a href='"+gMap("Playa Espadilla")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                nature: "Aberne her er frække - pas på tasken!",
+                music: "<strong>Selina</strong> har ofte live musik. <strong>Barba Roja</strong> har god stemning og udsigt. <a href='"+gMap("Restaurante Barba Roja")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                food: {
+                    break: ["Café Milagro <a href='"+gMap("Cafe Milagro Manuel Antonio")+"' target='_blank' class='map-link'>📍</a>", "El Patio <a href='"+gMap("El Patio de Cafe Milagro")+"' target='_blank' class='map-link'>📍</a>"],
+                    lunch: ["Falafel Bar <a href='"+gMap("Falafel Bar Manuel Antonio")+"' target='_blank' class='map-link'>📍</a>", "El Wagon <a href='"+gMap("El Wagon Manuel Antonio")+"' target='_blank' class='map-link'>📍</a>"],
+                    dinner: ["Emilio's Café <a href='"+gMap("Emilios Cafe")+"' target='_blank' class='map-link'>📍</a>", "Gabriella's <a href='"+gMap("Gabriellas Steak Seafood")+"' target='_blank' class='map-link'>📍</a>"]
+                }
+            },
+            puerto: {
+                title: "Puerto Viejo",
+                icon: "🌴",
+                desc: "Caribien. Reggae, kokosmælk og afslappet vibe.",
+                transport: "Fra San José: 'Caribe Shuttle' ($55). Tager 4.5 time.",
+                hotels: {
+                    romantic: [
+                        { name: "Banana Azul", desc: "Adults Only på stranden.", map: "Hotel Banana Azul", book: "Hotel Banana Azul" },
+                        { name: "Shawandha Lodge", desc: "Bungalows i junglen.", map: "Shawandha Lodge", book: "Shawandha Lodge" }
+                    ],
+                    budget: [
+                        { name: "Rocking J's", desc: "Hængekøjer og telte.", map: "Rocking Js", book: "Rocking Js" },
+                        { name: "Selina Puerto Viejo", desc: "Ved vandet.", map: "Selina Puerto Viejo", book: "Selina Puerto Viejo" }
+                    ]
+                },
+                romantic: {
+                    date: "Lej cykler og kør til <strong>Punta Uva</strong>. Gå op på klippen (Mirador) for udsigt. Spis på <strong>Koki Beach</strong>. <a href='"+gMap("Punta Uva Beach")+"' target='_blank' class='map-link'>📍 Se strand</a>",
+                    extras: ["Besøg Jaguar Rescue Center.", "Chokoladetur hos Bribri-stammen."]
+                },
+                activities: [
+                    { title: "Jaguar Rescue Center", text: "Rehabilitering af dyr. <a href='"+gMap("Jaguar Rescue Center")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Ara Manzanillo", text: "Genudsætning af grønne papegøjer. <a href='"+gMap("Ara Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                hikes: [
+                    { title: "Cahuita Nationalpark", text: "Helt flad rute langs kysten. Meget nem, men utrolig smuk. Man ser ofte aber og vaskebjørne. <a href='"+gMap("Cahuita National Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Gandoca-Manzanillo Refuge", text: "Mere vildt. Stien går fra Manzanillo by langs kysten. Kan være mudret! <a href='"+gMap("Refugio Nacional Gandoca-Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                ],
+                surf: { show: true, title: "Surf Guide", text: "<strong>Salsa Brava:</strong> Eksperter (Rev). <br><strong>Playa Cocles:</strong> Intermediate. <a href='"+gMap("Playa Cocles")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                nature: "Dovendyr hænger ofte i træerne langs vejen.",
+                music: "<strong>Reggae & Dancehall.</strong> Tag på <strong>Johnny's Place</strong> eller <strong>Hot Rocks</strong>. Det er her festen er. <a href='"+gMap("Johnnys Place Puerto Viejo")+"' target='_blank' class='map-link'>📍 Se kort</a>",
+                food: {
+                    break: ["Bread & Chocolate <a href='"+gMap("Bread and Chocolate Puerto Viejo")+"' target='_blank' class='map-link'>📍</a>", "De Gustibus <a href='"+gMap("De Gustibus Bakery")+"' target='_blank' class='map-link'>📍</a>"],
+                    lunch: ["Soda Lidia (Bedste Rice n Beans) <a href='"+gMap("Soda Lidia Puerto Viejo")+"' target='_blank' class='map-link'>📍</a>", "Tasty Waves <a href='"+gMap("Tasty Waves Cantina")+"' target='_blank' class='map-link'>📍</a>"],
+                    dinner: ["Stashu's Con Fusion <a href='"+gMap("Stashus Con Fusion")+"' target='_blank' class='map-link'>📍</a>", "Koki Beach <a href='"+gMap("Koki Beach Restaurant")+"' target='_blank' class='map-link'>📍</a>"]
+                }
+            }
+        };
+
+        const routes = {
+            pacific: [
+                { id: 'sjo', name: 'San José' },
+                { id: 'lafortuna', name: 'La Fortuna' },
+                { id: 'monteverde', name: 'Monteverde' },
+                { id: 'teresa', name: 'Santa Teresa' },
+                { id: 'sjo', name: 'Retur til SJO' }
+            ],
+            coast: [
+                { id: 'sjo', name: 'San José' },
+                { id: 'puerto', name: 'Puerto Viejo' },
+                { id: 'lafortuna', name: 'La Fortuna' },
+                { id: 'monteverde', name: 'Monteverde' },
+                { id: 'manuel', name: 'Manuel Antonio' },
+                { id: 'sjo', name: 'Retur til SJO' }
+            ]
+        };
+
+        let currentDestId = null;
+
+        function setRoute(routeId) {
+            // Button Styles
+            const btnP = document.getElementById('btn-pacific');
+            const btnC = document.getElementById('btn-coast');
+            const activeClass = "flex-1 py-2 text-xs font-bold rounded shadow-sm bg-white text-teal-800 ring-1 ring-slate-200";
+            const inactiveClass = "flex-1 py-2 text-xs font-bold rounded text-slate-500 hover:text-teal-800";
+            
+            if(routeId === 'pacific') { btnP.className = activeClass; btnC.className = inactiveClass; }
+            else { btnP.className = inactiveClass; btnC.className = activeClass; }
+
+            const container = document.getElementById('route-container');
+            container.innerHTML = routes[routeId].map(dest => `
+                <button onclick="loadDest('${dest.id}', this)" class="nav-item w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-all text-sm font-medium text-slate-600 mb-1 border-l-4 border-transparent">
+                    ${dest.name}
+                </button>
+            `).join('');
+        }
+
+        function loadDest(id, el) {
+            currentDestId = id;
+            const dest = data[id];
+
+            // Sidebar Active
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            if(el) el.classList.add('active');
+
+            // Show UI
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+
+            // Header
+            document.getElementById('dest-icon').innerText = dest.icon;
+            document.getElementById('dest-title').innerText = dest.title;
+            document.getElementById('dest-desc').innerText = dest.desc;
+            document.getElementById('dest-transport').innerHTML = dest.transport;
+
+            // Reset Tabs
+            switchTab('hotels');
+
+            // Render Hotels
+            const renderHotel = (h) => `
+                <div class="bg-white p-5 rounded-xl border border-slate-200 transition relative group hover:shadow-md">
+                    <h4 class="font-bold text-slate-800 text-lg mb-1">${h.name}</h4>
+                    <p class="text-xs text-slate-500 mb-4">${h.desc}</p>
+                    <div class="flex gap-2">
+                        <a href="${gMap(h.map)}" target="_blank" class="flex-1 text-center bg-slate-100 text-slate-700 text-xs font-bold py-2 rounded hover:bg-slate-200">📍 Kort</a>
+                        <a href="${booking(h.book)}" target="_blank" class="flex-1 text-center bg-teal-700 text-white text-xs font-bold py-2 rounded hover:bg-teal-800">📅 Book</a>
+                    </div>
+                </div>
+            `;
+            document.getElementById('list-hotels-romantic').innerHTML = dest.hotels.romantic.map(renderHotel).join('');
+            document.getElementById('list-hotels-budget').innerHTML = dest.hotels.budget.map(renderHotel).join('');
+
+            // Render Activities
+            document.getElementById('list-activities').innerHTML = dest.activities.map(a => `
+                <div class="flex gap-4 items-start pb-4 border-b border-slate-100 last:border-0">
+                    <div class="bg-teal-100 text-teal-700 p-2 rounded-lg mt-1"><i class="ph-bold ph-check"></i></div>
+                    <div>
+                        <div class="font-bold text-slate-800 text-sm">${a.title}</div>
+                        <div class="text-xs text-slate-600 mt-1 leading-relaxed">${a.text}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Hikes
+            if(dest.hikes) {
+                document.getElementById('list-hikes').innerHTML = dest.hikes.map(a => `
+                    <div class="flex gap-4 items-start pb-4 border-b border-slate-100 last:border-0">
+                        <div class="bg-green-100 text-green-700 p-2 rounded-lg mt-1"><i class="ph-bold ph-person-simple-hike"></i></div>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm">${a.title}</div>
+                            <div class="text-xs text-slate-600 mt-1 leading-relaxed">${a.text}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                 document.getElementById('list-hikes').innerHTML = "<p class='text-xs text-slate-400'>Ingen specifikke hikes i byen.</p>";
+            }
+
+
+            // Surf / Nature
+            const surfBox = document.getElementById('surf-container');
+            if(dest.surf.show) {
+                surfBox.classList.remove('hidden');
+                document.getElementById('surf-title').innerText = dest.surf.title;
+                document.getElementById('surf-info').innerHTML = dest.surf.text;
+            } else {
+                surfBox.classList.add('hidden');
+            }
+            document.getElementById('nature-tip').innerText = dest.nature;
+
+            // Romantic
+            document.getElementById('romantic-date').innerHTML = dest.romantic.date;
+            document.getElementById('romantic-extras').innerHTML = dest.romantic.extras.map(e => `<li class="flex items-start gap-2"><i class="ph-fill ph-heart-straight mt-1 text-rose-400"></i><span>${e}</span></li>`).join('');
+
+            // Food & Music
+            document.getElementById('music-info').innerHTML = dest.music;
+            const renderFood = (list) => list.map(f => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>${f}</li>`).join('');
+            document.getElementById('food-break').innerHTML = renderFood(dest.food.break);
+            document.getElementById('food-lunch').innerHTML = renderFood(dest.food.lunch);
+            document.getElementById('food-dinner').innerHTML = renderFood(dest.food.dinner);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        }
+
+        window.onload = () => setRoute('pacific');
+    </script>
+</body>
+</html>
