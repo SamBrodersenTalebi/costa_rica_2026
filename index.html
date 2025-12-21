@@ -115,11 +115,25 @@
                     <!-- Route buttons injected here -->
                 </div>
 
+                <!-- Weather & Timing Box -->
+                <div class="mt-8 bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-xl border border-amber-200 shadow-sm">
+                    <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="ph-fill ph-sun text-orange-500"></i> Hvorfor Feb/Mar?</h4>
+                    <p class="text-xs text-amber-900 leading-relaxed">
+                        <strong>Perfekt rejsetid!</strong> Feb/Mar er midt i tørsæsonen med:
+                        <br>• Minimal regn (næsten daglig sol)
+                        <br>• Varmt vejr 30-35°C (Pacific) / 24-29°C (Central Valley)
+                        <br>• Bedste dyreobservation
+                        <br>• Grøn natur (regnsæsonen lige slut)
+                        <br><br>
+                        <strong>Husk:</strong> Dette er højsæson - book hotels, shuttles og nationalparks 2-3 måneder i forvejen!
+                    </p>
+                </div>
+
                 <!-- Global Transport Tip -->
-                <div class="mt-8 bg-teal-50 p-4 rounded-xl border border-teal-100">
+                <div class="mt-6 bg-teal-50 p-4 rounded-xl border border-teal-100">
                     <h4 class="font-bold text-teal-900 text-sm mb-2 flex items-center gap-2"><i class="ph-fill ph-bus"></i> Transport Info</h4>
                     <p class="text-xs text-teal-800 leading-relaxed">
-                        Anbefalet transport mellem byer er <strong>Shared Shuttles</strong> (minibusser med A/C). 
+                        Anbefalet transport mellem byer er <strong>Shared Shuttles</strong> (minibusser med A/C).
                         <br><br>
                         <a href="https://www.interbusonline.com/" target="_blank" class="underline font-bold hover:text-teal-600">🔗 Interbus</a> eller <a href="https://www.tropicaltourshuttles.com/" target="_blank" class="underline font-bold hover:text-teal-600">🔗 Tropical Tours</a>.
                         <br>Book altid 2 dage før.
@@ -153,11 +167,12 @@
                     </div>
 
                     <!-- Tabs -->
-                    <div class="flex gap-8 mt-6 ml-1">
+                    <div class="flex gap-8 mt-6 ml-1 flex-wrap">
                         <button onclick="switchTab('hotels')" id="tab-hotels" class="tab-btn active text-sm">🏨 Overnatning</button>
                         <button onclick="switchTab('activities')" id="tab-activities" class="tab-btn text-sm">🥾 Aktiviteter & Hikes</button>
                         <button onclick="switchTab('romantic')" id="tab-romantic" class="tab-btn text-sm">❤️ Romantik</button>
                         <button onclick="switchTab('food')" id="tab-food" class="tab-btn text-sm">🍽️ Mad & Musik</button>
+                        <button onclick="switchTab('practical')" id="tab-practical" class="tab-btn text-sm">ℹ️ Praktisk Info</button>
                     </div>
                 </div>
 
@@ -276,6 +291,43 @@
                         </div>
                     </div>
 
+                    <!-- TAB: PRACTICAL INFO -->
+                    <div id="content-practical" class="tab-content hidden space-y-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Recommended Stay -->
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                <h3 class="serif text-xl text-slate-800 mb-4 flex items-center gap-2">
+                                    <i class="ph-fill ph-calendar text-teal-600"></i> Anbefalet Ophold
+                                </h3>
+                                <p id="practical-nights" class="text-slate-700 text-sm leading-relaxed mb-4"></p>
+                            </div>
+
+                            <!-- Budget Guide -->
+                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                <h3 class="serif text-xl text-slate-800 mb-4 flex items-center gap-2">
+                                    <i class="ph-fill ph-coins text-amber-600"></i> Budget Guide
+                                </h3>
+                                <div id="practical-budget" class="text-slate-700 text-sm leading-relaxed space-y-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Important Notes -->
+                        <div class="bg-amber-50 p-5 rounded-xl border border-amber-200">
+                            <h3 class="font-bold text-amber-900 mb-3 flex items-center gap-2">
+                                <i class="ph-fill ph-warning text-xl"></i> Vigtige Noter
+                            </h3>
+                            <ul id="practical-notes" class="space-y-2 text-sm text-amber-900"></ul>
+                        </div>
+
+                        <!-- Best Time -->
+                        <div class="bg-teal-50 p-5 rounded-xl border border-teal-200">
+                            <h3 class="font-bold text-teal-900 mb-3 flex items-center gap-2">
+                                <i class="ph-fill ph-sun-horizon text-xl"></i> Bedste Tidspunkt
+                            </h3>
+                            <p id="practical-timing" class="text-sm text-teal-900 leading-relaxed"></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -322,13 +374,19 @@
                     break: ["Café Miel (Kaffe & Kage) <a href='"+gMap("Cafe Miel San Jose")+"' target='_blank' class='map-link'>📍</a>", "Franco (Brunch) <a href='"+gMap("Franco Restaurante")+"' target='_blank' class='map-link'>📍</a>"],
                     lunch: ["Soda Tapia (Markedet) <a href='"+gMap("Soda Tapia Mercado Central")+"' target='_blank' class='map-link'>📍</a>", "La Ventanita (Snacks) <a href='"+gMap("La Ventanita San Jose")+"' target='_blank' class='map-link'>📍</a>"],
                     dinner: ["Restaurante Silvestre <a href='"+gMap("Restaurante Silvestre")+"' target='_blank' class='map-link'>📍</a>", "La Esquina de Buenos Aires (Bøf) <a href='"+gMap("La Esquina de Buenos Aires")+"' target='_blank' class='map-link'>📍</a>"]
+                },
+                practical: {
+                    nights: "1 nat er nok til at lande og se hovedseværdigheder. 2 nætter hvis I vil fordybe jer i kulturen.",
+                    budget: "<strong>Daglig budget:</strong><br>• Budget: $40-60/person (hostel + sodas)<br>• Mellem: $80-120/person (hotel + blandede restauranter)<br>• Museum entré: $10-15",
+                    notes: ["Lufthavnstaxa: Brug kun officielle orange taxaer eller Uber", "Mercado Central lukker tidligt - kom før kl. 17", "Central Valley har behageligt vejr (24-29°C)"],
+                    timing: "San José er godt hele året. Feb/Mar er tørt og behageligt - perfekt til at starte jeres rejse."
                 }
             },
             lafortuna: {
                 title: "La Fortuna",
                 icon: "🌋",
                 desc: "Eventyrhovedstaden ved vulkanen Arenal. Varme kilder og jungle.",
-                transport: "Fra San José: 'Interbus' shuttle ($57/person). Tager 3.5 time. Afhentning på hotel.",
+                transport: "Fra San José: Shared shuttle ($50-65/person, ca. 4-5 timer). Interbus eller Tropical Tours. Book 2 dage før.",
                 hotels: {
                     romantic: [
                         { name: "Hotel Los Lagos", desc: "Egne varme kilder og udsigt til vulkan.", map: "Hotel Los Lagos", book: "Hotel Los Lagos Spa & Resort" },
@@ -340,7 +398,7 @@
                     ]
                 },
                 romantic: {
-                    date: "Aftenpas til <strong>EcoTermales Fortuna</strong>. De mest intime varme kilder med begrænset adgang. Stearinlys i junglen. <a href='https://ecotermalesfortuna.cr/' target='_blank' class='map-link'>🔗 Book Tid</a>",
+                    date: "Aftenpas til <strong>EcoTermales Fortuna</strong> ($49/voksen, $29/barn 5-11 år). De mest intime varme kilder med begrænset adgang (max 100 personer). Stearinlys i junglen. <strong>VIGTIGT: Reservation påkrævet!</strong> <a href='https://ecotermalesfortuna.cr/' target='_blank' class='map-link'>🔗 Book Tid</a>",
                     extras: ["Chokoladetur hos 'Rainforest Chocolate Tour' <a href='"+gMap("Rainforest Chocolate Tour")+"' target='_blank' class='map-link'>📍 Link</a>", "Privat middag på 'Don Rufino'."]
                 },
                 activities: [
@@ -360,13 +418,19 @@
                     break: ["Red Frog Coffee Roaster <a href='"+gMap("Red Frog Coffee Roaster")+"' target='_blank' class='map-link'>📍</a>", "Panaderia la Principal <a href='"+gMap("Panaderia la Principal La Fortuna")+"' target='_blank' class='map-link'>📍</a>"],
                     lunch: ["Soda La Hormiga (Lokal) <a href='"+gMap("Soda La Hormiga")+"' target='_blank' class='map-link'>📍</a>", "Soda Viquez <a href='"+gMap("Soda Viquez")+"' target='_blank' class='map-link'>📍</a>"],
                     dinner: ["Don Rufino (Fine Dining) <a href='"+gMap("Don Rufino")+"' target='_blank' class='map-link'>📍</a>", "Kappa Sushi <a href='"+gMap("Kappa Sushi La Fortuna")+"' target='_blank' class='map-link'>📍</a>"]
+                },
+                practical: {
+                    nights: "2-3 nætter. Nok tid til vulkan, varme kilder, og et par hikes/aktiviteter.",
+                    budget: "<strong>Daglig budget:</strong><br>• Budget: $50-80/person<br>• Mellem: $100-150/person<br>• Ecotermales: $49 voksne, $29 børn<br>• Nationalpark aktiviteter: $10-15",
+                    notes: ["Book Ecotermales i forvejen - begrænset plads (max 100 gæster)", "Varme kilder er bedst om aftenen", "Vejret kan være varmere end Central Valley (30-35°C)"],
+                    timing: "Feb/Mar er tørsæson - perfekt til vandrefald og outdoor aktiviteter. Arenal Volcano er oftest synlig om morgenen (skyerne kommer senere på dagen)."
                 }
             },
             monteverde: {
                 title: "Monteverde",
                 icon: "🍃",
                 desc: "Tågeskoven. Køligt klima, mystik og ziplines.",
-                transport: "Fra La Fortuna: Book <strong>Jeep-Boat-Jeep</strong> ($25). En smuk tur over søen og op af bjerget (3 timer).",
+                transport: "Fra La Fortuna: Book <strong>Jeep-Boat-Jeep</strong> ($34-73/person, ca. 3.5 timer). En smuk tur over søen og op af bjerget. Alternativt shuttle ($50).",
                 hotels: {
                     romantic: [
                         { name: "Hotel Belmar", desc: "Alpehytte-luksus. Fantastisk solnedgangsbar.", map: "Hotel Belmar", book: "Hotel Belmar" },
@@ -387,7 +451,7 @@
                 ],
                 hikes: [
                     { title: "Reserva Curi-Cancha", text: "Bedre end hovedparken for at se Quetzal-fuglen. Mindre turistet. <a href='"+gMap("Reserva Curi-Cancha")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Bosque Nuboso Trail", text: "Den klassiske tågeskov. 'Sendero Bosque Nuboso' er smuk. <a href='"+gMap("Monteverde Cloud Forest Biological Reserve")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Bosque Nuboso Trail (Monteverde Cloud Forest)", text: "Den klassiske tågeskov ($29 voksne, $16 børn 6-12). 'Sendero Bosque Nuboso' er smuk. Nattour: $38+. <a href='"+gMap("Monteverde Cloud Forest Biological Reserve")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                     { title: "Cerro Amigos", text: "Gratis hike til toppen af bjerget (bag Hotel Belmar). Fantastisk solnedgang. <a href='"+gMap("Cerro Amigos")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 surf: { show: false, text: "" },
@@ -397,13 +461,19 @@
                     break: ["Stella's Bakery <a href='"+gMap("Stellas Bakery Monteverde")+"' target='_blank' class='map-link'>📍</a>", "Choco Café <a href='"+gMap("Choco Cafe Don Juan")+"' target='_blank' class='map-link'>📍</a>"],
                     lunch: ["Taco Taco <a href='"+gMap("Taco Taco Monteverde")+"' target='_blank' class='map-link'>📍</a>", "Sabor Tico <a href='"+gMap("Sabor Tico Monteverde")+"' target='_blank' class='map-link'>📍</a>"],
                     dinner: ["Tree House Restaurant <a href='"+gMap("Tree House Restaurant Monteverde")+"' target='_blank' class='map-link'>📍</a>", "Tramonti (Italiensk) <a href='"+gMap("Tramonti Monteverde")+"' target='_blank' class='map-link'>📍</a>"]
+                },
+                practical: {
+                    nights: "2 nætter. Én dag til skoven, én dag til zipline/aktiviteter.",
+                    budget: "<strong>Daglig budget:</strong><br>• Budget: $60-90/person<br>• Mellem: $120-180/person<br>• Cloud Forest entré: $29 voksne, $16 børn<br>• Ziplines & tours: $50-100",
+                    notes: ["Køligt vejr - tag en jakke (kan være 15-20°C)", "Morgen er bedst til at se Quetzal-fuglen (feb-juli)", "Vejene er støvede og kuperede - jeep-boat-jeep fra La Fortuna anbefales"],
+                    timing: "Feb/Mar er tør sæson og god til Quetzal-spotting. Tågen er der året rundt - det er derfor det hedder cloud forest!"
                 }
             },
             teresa: {
                 title: "Santa Teresa",
                 icon: "🏄‍♀️",
                 desc: "Støvede veje, fantastisk surf og boho-livsstil.",
-                transport: "Fra Monteverde: Shuttle til Puntarenas -> Færge -> Shuttle til Santa Teresa. Book 'Tropical Tours' ($60). Tager 4-5 timer.",
+                transport: "Fra Monteverde: Shared shuttle ($60/person, 3-6 timer) inkl. færge. Alternativt bus+færge ($12, 6h 50min). Book Tropical Tours eller anden shuttle-service.",
                 hotels: {
                     romantic: [
                         { name: "Hotel Tropico Latino", desc: "Strand, spa og yoga.", map: "Hotel Tropico Latino", book: "Hotel Tropico Latino" },
@@ -426,13 +496,19 @@
                     { title: "Cabo Blanco Reserve", text: "Costa Ricas første nationalpark. En hård men smuk tur til en øde strand (5km hver vej). Lukket mandag/tirsdag. <a href='"+gMap("Reserva Natural Absoluta Cabo Blanco")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                     { title: "Montezuma Waterfall", text: "Kør på ATV til Montezuma. Vandretur op til vandfaldet. Kan være glat! <a href='"+gMap("Montezuma Waterfalls")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
-                surf: { show: true, title: "Surf Guide", text: "<strong>Playa Carmen:</strong> Intermediate. <br><strong>Playa Hermosa:</strong> Begyndere/Longboard. <br>Book lektioner hos 'Del Soul'. <a href='"+gMap("Del Soul Surf School")+"' target='_blank' class='map-link'>📍 Link</a>" },
+                surf: { show: true, title: "Surf Guide", text: "<strong>Playa Carmen:</strong> Intermediate. <br><strong>Playa Hermosa:</strong> Begyndere/Longboard. <br><br><strong>Priser:</strong> Gruppe lektioner $60-80, Privat $80. Surfboard leje $10-15/dag. 5-dages pakker fra $52/dag. <br>Book lektioner hos 'Del Soul'. <a href='"+gMap("Del Soul Surf School")+"' target='_blank' class='map-link'>📍 Link</a>" },
                 nature: "Tidevandspools ved Mal Pais er fulde af liv ved lavvande.",
                 music: "<strong>La Lora Amarilla</strong>. Det legendariske sted. Reggae nights, Salsa og DJ. <a href='"+gMap("La Lora Amarilla")+"' target='_blank' class='map-link'>📍 Se kort</a>",
                 food: {
                     break: ["The Bakery <a href='"+gMap("The Bakery Santa Teresa")+"' target='_blank' class='map-link'>📍</a>", "Ani's Bowls <a href='"+gMap("Anis Bowls")+"' target='_blank' class='map-link'>📍</a>"],
                     lunch: ["Eat Street <a href='"+gMap("Eat Street Santa Teresa")+"' target='_blank' class='map-link'>📍</a>", "Soda Tiquicia <a href='"+gMap("Soda Tiquicia Santa Teresa")+"' target='_blank' class='map-link'>📍</a>"],
                     dinner: ["Katana (Asiatisk) <a href='"+gMap("Katana Santa Teresa")+"' target='_blank' class='map-link'>📍</a>", "Al Chile Viola (Italiensk) <a href='"+gMap("Al Chile Viola")+"' target='_blank' class='map-link'>📍</a>"]
+                },
+                practical: {
+                    nights: "3-5 nætter. Perfekt til at slappe af, surfe, og nyde stranden. Mange bliver længere!",
+                    budget: "<strong>Daglig budget:</strong><br>• Budget: $40-70/person<br>• Mellem: $90-140/person<br>• Surf lektion: $60-80 gruppe, $80 privat<br>• Surfboard leje: $10-15/dag<br>• ATV leje: ~$50-80/dag",
+                    notes: ["Støvede veje - ATV eller scooter anbefales til transport", "Tidevand påvirker surf - tjek forecast", "Få kontanter med - ikke alle steder tager kort"],
+                    timing: "Feb/Mar er tør sæson med konsistente bølger og minimal regn. Perfekt strand- og surfvejr (30-35°C, solopgang ~5:45, solnedgang ~18:00)."
                 }
             },
             manuel: {
@@ -455,7 +531,7 @@
                     extras: ["Sunset Sail katamaran tur.", "Picnic på Biesanz Beach."]
                 },
                 activities: [
-                    { title: "Nationalparken", text: "Book guide for at se dovendyr. <a href='"+gMap("Manuel Antonio National Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Nationalparken", text: "$18 voksne, $5.65 børn. <strong>VIGTIGT: KUN online booking - ingen køb ved indgang!</strong> Åben Ons-Man 7am-4pm (lukket tirsdag). Ingen mad tilladt. Book 2-3 måneder i forvejen (feb-mar). <a href='"+gMap("Manuel Antonio National Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                     { title: "Spice Farm Tour", text: "Villa Vanilla (Vanilje farm). <a href='"+gMap("Villa Vanilla Spice Farm")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
@@ -469,6 +545,12 @@
                     break: ["Café Milagro <a href='"+gMap("Cafe Milagro Manuel Antonio")+"' target='_blank' class='map-link'>📍</a>", "El Patio <a href='"+gMap("El Patio de Cafe Milagro")+"' target='_blank' class='map-link'>📍</a>"],
                     lunch: ["Falafel Bar <a href='"+gMap("Falafel Bar Manuel Antonio")+"' target='_blank' class='map-link'>📍</a>", "El Wagon <a href='"+gMap("El Wagon Manuel Antonio")+"' target='_blank' class='map-link'>📍</a>"],
                     dinner: ["Emilio's Café <a href='"+gMap("Emilios Cafe")+"' target='_blank' class='map-link'>📍</a>", "Gabriella's <a href='"+gMap("Gabriellas Steak Seafood")+"' target='_blank' class='map-link'>📍</a>"]
+                },
+                practical: {
+                    nights: "2-3 nætter. Én dag til nationalparken, resten til strande og afslapning.",
+                    budget: "<strong>Daglig budget:</strong><br>• Budget: $50-80/person<br>• Mellem: $100-150/person<br>• Nationalpark: $18 voksne, $5.65 børn<br>• Guided tours: $25-40/person",
+                    notes: ["<strong>KRITISK:</strong> Book nationalpark billetter online 2-3 måneder i forvejen!", "Ingen mad tilladt i parken (kun vand)", "Parken lukket tirsdage", "Åbningstider: Ons-Man 7am-4pm (strande lukker 3pm)", "Aber er frække - hold mad og tasker tæt!"],
+                    timing: "Feb/Mar er højsæson - perfekt vejr men mange turister. Book ALT i forvejen. Tørsæson betyder optimale forhold til dyreobservation."
                 }
             },
             puerto: {
@@ -491,7 +573,7 @@
                     extras: ["Besøg Jaguar Rescue Center.", "Chokoladetur hos Bribri-stammen."]
                 },
                 activities: [
-                    { title: "Jaguar Rescue Center", text: "Rehabilitering af dyr. <a href='"+gMap("Jaguar Rescue Center")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Jaguar Rescue Center", text: "Rehabilitering af dyr. $27/person (børn under 10 gratis). Tours Man-Lør kl. 9:30 & 11:30. 1.5 timers tur. <a href='"+gMap("Jaguar Rescue Center")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                     { title: "Ara Manzanillo", text: "Genudsætning af grønne papegøjer. <a href='"+gMap("Ara Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
@@ -505,6 +587,12 @@
                     break: ["Bread & Chocolate <a href='"+gMap("Bread and Chocolate Puerto Viejo")+"' target='_blank' class='map-link'>📍</a>", "De Gustibus <a href='"+gMap("De Gustibus Bakery")+"' target='_blank' class='map-link'>📍</a>"],
                     lunch: ["Soda Lidia (Bedste Rice n Beans) <a href='"+gMap("Soda Lidia Puerto Viejo")+"' target='_blank' class='map-link'>📍</a>", "Tasty Waves <a href='"+gMap("Tasty Waves Cantina")+"' target='_blank' class='map-link'>📍</a>"],
                     dinner: ["Stashu's Con Fusion <a href='"+gMap("Stashus Con Fusion")+"' target='_blank' class='map-link'>📍</a>", "Koki Beach <a href='"+gMap("Koki Beach Restaurant")+"' target='_blank' class='map-link'>📍</a>"]
+                },
+                practical: {
+                    nights: "3-4 nætter. Tid til caribisk kultur, Jaguar Rescue Center, cykelture, og chill.",
+                    budget: "<strong>Daglig budget:</strong><br>• Budget: $40-70/person<br>• Mellem: $90-140/person<br>• Jaguar Rescue: $27/person (børn under 10 gratis)<br>• Cahuita Park: Donation-based<br>• Cykel leje: ~$10/dag",
+                    notes: ["Caribisk kultur - mere afslappet tempo end Stillehavskysten", "Jaguar Rescue Center tours: Man-Lør 9:30 & 11:30", "Lej cykel for at udforske Punta Uva og Manzanillo", "Regnskov klima - kan være mere fugtigt end Stillehavet"],
+                    timing: "Feb/Mar er også tørsæson her (caribbean coast er normalt regnfuld sep-dec). Dovendyr ses året rundt. Perfekt vejr til strandture og cykling."
                 }
             }
         };
@@ -630,6 +718,14 @@
             document.getElementById('food-break').innerHTML = renderFood(dest.food.break);
             document.getElementById('food-lunch').innerHTML = renderFood(dest.food.lunch);
             document.getElementById('food-dinner').innerHTML = renderFood(dest.food.dinner);
+
+            // Practical Info
+            if(dest.practical) {
+                document.getElementById('practical-nights').innerText = dest.practical.nights;
+                document.getElementById('practical-budget').innerHTML = dest.practical.budget;
+                document.getElementById('practical-notes').innerHTML = dest.practical.notes.map(n => `<li class="flex items-start gap-2"><i class="ph-fill ph-warning-circle text-amber-600 mt-0.5"></i><span>${n}</span></li>`).join('');
+                document.getElementById('practical-timing').innerHTML = dest.practical.timing;
+            }
         }
 
         function switchTab(tabId) {
