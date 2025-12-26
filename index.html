@@ -249,9 +249,10 @@
             <div class="p-5">
                 <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Vælg Rejserute</h2>
                 
-                <div class="flex bg-slate-100 p-1 rounded-lg mb-6 shadow-inner">
+                <div class="flex bg-slate-100 p-1 rounded-lg mb-6 shadow-inner gap-1">
                     <button onclick="setRoute('pacific')" id="btn-pacific" class="flex-1 py-2 text-xs font-bold rounded shadow-sm bg-white text-teal-800">Stillehavet</button>
                     <button onclick="setRoute('coast')" id="btn-coast" class="flex-1 py-2 text-xs font-bold rounded text-slate-500 hover:text-teal-800">Kyst-til-Kyst</button>
+                    <button onclick="setRoute('sailing')" id="btn-sailing" class="flex-1 py-2 text-xs font-bold rounded text-slate-500 hover:text-teal-800">🚤 Sejl-rute</button>
                 </div>
 
                 <div id="route-container" class="space-y-1">
@@ -709,7 +710,7 @@
                 title: "Santa Teresa",
                 icon: "🏄‍♀️",
                 desc: "Støvede veje, fantastisk surf og boho-livsstil.",
-                transport: "<strong>Fra Monteverde til Santa Teresa:</strong><br>• <strong>Shared Shuttle:</strong> $60-75/person (~4-5 timer) inkl. færge over Golf of Nicoya. Book <a href='https://www.tropicaltourshuttles.com/' target='_blank' class='map-link'>🔗 Tropical Tours</a>.<br>• <strong>Offentlig Bus + Færge:</strong> $12/person (~6-7 timer). Bus til Puntarenas → Færge til Paquera → Bus til Santa Teresa. Eventyr på budget!<br>• <strong>Leje Bil + Færge:</strong> 4WD anbefales! Færgebillet ~$30 (bil+2 personer). Kør til Puntarenas, tag færge til Paquera, derefter 1 time kørsel til Santa Teresa.",
+                transport: "<strong>Fra Monteverde til Santa Teresa:</strong><br>• <strong>Shared Shuttle:</strong> $60-75/person (~4-5 timer) inkl. færge over Golf of Nicoya. Book <a href='https://www.tropicaltourshuttles.com/' target='_blank' class='map-link'>🔗 Tropical Tours</a>.<br>• <strong>Offentlig Bus + Færge:</strong> $12/person (~6-7 timer). Bus til Puntarenas → Færge til Paquera → Bus til Santa Teresa. Eventyr på budget!<br>• <strong>Leje Bil + Færge:</strong> 4WD anbefales! Færgebillet ~$30 (bil+2 personer). Kør til Puntarenas, tag færge til Paquera, derefter 1 time kørsel til Santa Teresa.<br><br><strong>🚤 SEJL-RUTE til Manuel Antonio:</strong><br>• <strong>Speedbåd + Shuttle:</strong> $70-95/person (~3-4 timer total). Kør til Montezuma (15 min), tag speedbåd til Jacó (1 time på havet, $40-55), derefter shuttle til Manuel Antonio (1 time, $30-40).<br>• <strong>Afgangstid:</strong> Speedbåd fra Montezuma kl. 08:30. Book via <a href='https://www.zumatours.net/' target='_blank' class='map-link'>🔗 Zuma Tours</a>.<br>• <strong>Fordel:</strong> Hurtigere end land-ruten (5-6 timer) OG du får en fed sejloplevelse! 🌊",
                 images: {
                     hero: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop&auto=format"
                 },
@@ -764,7 +765,7 @@
                 title: "Manuel Antonio",
                 icon: "🐒",
                 desc: "Jungle møder strand. Nationalparken er fuld af dyr.",
-                transport: "<strong>Fra Santa Teresa (Pacific Route):</strong><br>• <strong>Shared Shuttle:</strong> $75-90/person (~5-6 timer) inkl. færge. Book Interbus/Tropical Tours.<br>• <strong>Leje Bil + Færge:</strong> Tilbage over færgen til fastlandet, derefter 3 timer syd langs kysten.<br><br><strong>Fra Monteverde (Coast Route):</strong><br>• <strong>Shared Shuttle:</strong> $55-70/person (~4 timer). Direkte ned fra bjergene.<br>• <strong>Private Shuttle:</strong> $180-220 (hele bilen). Mere fleksibelt afgang.",
+                transport: "<strong>Fra Santa Teresa (Pacific Route):</strong><br>• <strong>Shared Shuttle:</strong> $75-90/person (~5-6 timer) inkl. færge. Book Interbus/Tropical Tours.<br>• <strong>Leje Bil + Færge:</strong> Tilbage over færgen til fastlandet, derefter 3 timer syd langs kysten.<br><br><strong>🚤 Fra Santa Teresa (SEJL-RUTE - Anbefalet!):</strong><br>• <strong>Speedbåd + Shuttle:</strong> $70-95/person (~3-4 timer). Hurtigere og federe! Fra Montezuma (15 min fra Santa Teresa) sejler speedbåd til Jacó kl. 08:30 (1 time, $40-55), derefter shuttle til Manuel Antonio (1 time, $30-40).<br>• <strong>Book speedbåd:</strong> <a href='https://www.zumatours.net/' target='_blank' class='map-link'>🔗 Zuma Tours</a> eller <a href='https://tropicaltourshuttles.com/taxi-boat/montezuma-to-jaco/' target='_blank' class='map-link'>🔗 Tropical Tours</a>.<br><br><strong>Fra Monteverde (Coast Route):</strong><br>• <strong>Shared Shuttle:</strong> $55-70/person (~4 timer). Direkte ned fra bjergene.<br>• <strong>Private Shuttle:</strong> $180-220 (hele bilen). Mere fleksibelt afgang.",
                 images: {
                     hero: "https://images.unsplash.com/photo-1576485290814-1c72aa4d0e55?w=1200&h=600&fit=crop&auto=format"
                 },
@@ -942,6 +943,14 @@
                 { id: 'monteverde', name: 'Monteverde' },
                 { id: 'manuel', name: 'Manuel Antonio' },
                 { id: 'sjo', name: 'Retur til SJO' }
+            ],
+            sailing: [
+                { id: 'sjo', name: 'San José' },
+                { id: 'lafortuna', name: 'La Fortuna' },
+                { id: 'monteverde', name: 'Monteverde' },
+                { id: 'teresa', name: 'Santa Teresa' },
+                { id: 'manuel', name: '🚤 Manuel Antonio' },
+                { id: 'sjo', name: 'Retur til SJO' }
             ]
         };
 
@@ -951,11 +960,17 @@
             // Button Styles
             const btnP = document.getElementById('btn-pacific');
             const btnC = document.getElementById('btn-coast');
+            const btnS = document.getElementById('btn-sailing');
             const activeClass = "flex-1 py-2 text-xs font-bold rounded shadow-sm bg-white text-teal-800 ring-1 ring-slate-200";
             const inactiveClass = "flex-1 py-2 text-xs font-bold rounded text-slate-500 hover:text-teal-800";
-            
-            if(routeId === 'pacific') { btnP.className = activeClass; btnC.className = inactiveClass; }
-            else { btnP.className = inactiveClass; btnC.className = activeClass; }
+
+            btnP.className = inactiveClass;
+            btnC.className = inactiveClass;
+            btnS.className = inactiveClass;
+
+            if(routeId === 'pacific') btnP.className = activeClass;
+            else if(routeId === 'coast') btnC.className = activeClass;
+            else if(routeId === 'sailing') btnS.className = activeClass;
 
             const container = document.getElementById('route-container');
             container.innerHTML = routes[routeId].map(dest => `
