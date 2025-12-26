@@ -258,6 +258,14 @@
                     <!-- Route buttons injected here -->
                 </div>
 
+                <!-- Epic Expeditions Button -->
+                <div class="mt-6 pt-6 border-t border-slate-200">
+                    <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Ekstra Eventyr</h2>
+                    <button onclick="loadDest('expeditions', this)" class="nav-item w-full text-left p-3 rounded-lg hover:bg-slate-50 transition-all text-sm font-medium text-slate-600 mb-1 border-l-4 border-transparent bg-gradient-to-r from-orange-50 to-amber-50 hover:from-orange-100 hover:to-amber-100">
+                        ⛰️ Episke Ekspeditioner
+                    </button>
+                </div>
+
                 <!-- Weather & Timing Box -->
                 <div class="mt-8 bg-gradient-to-br from-amber-50 to-orange-50 p-4 rounded-xl border border-amber-200 shadow-sm">
                     <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2"><i class="ph-fill ph-sun text-orange-500"></i> Hvorfor Feb/Mar?</h4>
@@ -860,6 +868,57 @@
                     budget: "<strong>Daglig budget:</strong><br>• Budget: $40-70/person<br>• Mellem: $90-140/person<br>• Jaguar Rescue: $27/person (børn under 10 gratis)<br>• Cahuita Park: Donation-based<br>• Cykel leje: ~$10/dag",
                     notes: ["Caribisk kultur - mere afslappet tempo end Stillehavskysten", "Jaguar Rescue Center tours: Man-Lør 9:30 & 11:30", "Lej cykel for at udforske Punta Uva og Manzanillo", "Regnskov klima - kan være mere fugtigt end Stillehavet"],
                     timing: "Feb/Mar er også tørsæson her (caribbean coast er normalt regnfuld sep-dec). Dovendyr ses året rundt. Perfekt vejr til strandture og cykling."
+                }
+            },
+            expeditions: {
+                title: "Episke Ekspeditioner",
+                icon: "⛰️",
+                desc: "Multi-dages eventyr for de vilde sjæle. Fra jungle lodges til højeste bjerg.",
+                transport: "Disse ture kræver dedikeret planlægning og transport - se hver aktivitet for detaljer.",
+                hotels: {
+                    romantic: [],
+                    budget: []
+                },
+                romantic: {
+                    date: "Disse eventyr ER romantikken - afkolblet fra verden i regnskov, bjerge og grotter.",
+                    extras: []
+                },
+                activities: [
+                    {
+                        title: "Pacuare River Rafting (2 Dage)",
+                        text: "En af verdens bedste rafting-oplevelser! <strong>Rios Lodge</strong> (tidligere Rios Tropicales): Den mest kendte operatør med jungle lodge dybt inde i regnskoven ved floden. Tilgængelig KUN via vandring eller rafting - ingen veje! Ophold i luksuriøs eco-lodge i 1,000 hektar privat reservat. Class II-IV rapids. Minimum alder: 6 år (tør sæson), 8 år (regnsæson), 12 år (nedre Pacuare Gorge). 2-dages pakker fra $542-1,041 all-inclusive (måltider, aktiviteter, rafting). <a href='https://www.rioslodge.com/' target='_blank' class='map-link'>🔗 Rios Lodge</a><br><br><strong>Exploradores Outdoors</strong>: Godt og ofte billigere alternativ. Tilbyder også transport mellem destinationer (f.eks. San José → Rafting → Puerto Viejo). <a href='https://exploradoresoutdoors.com/' target='_blank' class='map-link'>🔗 Exploradores Outdoors</a>"
+                    },
+                    {
+                        title: "Corcovado Nationalpark - Sirena Station (1-3 Dage)",
+                        text: "Det mest biologisk intense sted på jorden! Overnat ved Sirena Ranger Station dybt inde i urørt regnskov. Dagture eller 1-3 nætters pakker. Max 80 personer/nat (500/dag for dagsbesøg). Inkluderer båd fra Drake Bay (1 time 15 min), 4 timers guidet vandring, måltider og overnatning. Se tapirer, pekari'er, aber, jaguarer (om du er heldig!). <strong>VIGTIGT:</strong> Book langt i forvejen - meget begrænset adgang!<br><br><strong>Corcovado Info Center</strong>: Pålidelig lokal operatør i Drake Bay. <a href='https://corcovadoinfocenter.com/' target='_blank' class='map-link'>🔗 Corcovado Info Center</a><br><strong>Top Trails Corcovado</strong>: Specialiseret i vandreture (mere hardcore end bådturen). <a href='https://toptrailscorcovado.com/' target='_blank' class='map-link'>🔗 Top Trails Corcovado</a>"
+                    },
+                    {
+                        title: "Cerro Chirripó Trek (2-3 Dage)",
+                        text: "Bestigning af Costa Ricas højeste bjerg (3,820m)! Kun 60 personer/dag tilladt. <strong>To-trins booking påkrævet:</strong><br><br><strong>1) SINAC (Officiel Tilladelse):</strong> Permits frigives 6 måneder i forvejen. Opret konto og book på sinac.go.cr. Check ind personligt i San Gerardo dagen FØR kl. 16:00. <a href='https://serviciosenlinea.sinac.go.cr/' target='_blank' class='map-link'>🔗 SINAC Booking</a><br><br><strong>2) Crestones Base Camp:</strong> Efter du har permit, book overnatning gennem Consorcio Aguas Eternas. $35/person/nat + måltider ($10 morgenmad, $13 frokost, $13 middag). Email: [email protected] med dit permit-nummer (svar inden 5 dage). <a href='https://chirripo.org/' target='_blank' class='map-link'>🔗 Crestones Info</a><br><br>Bedste tid: Dec-April (tørsæson). Tag VARMT tøj - det kan være under frysepunktet på toppen!"
+                    },
+                    {
+                        title: "Camino de Costa Rica (12-16 Dage)",
+                        text: "280 km Mar a Mar (hav til hav) vandring! Fra Caribien til Stillehavet gennem 16 etaper og 6 mikro-klimaer. Passerer gennem indfødt territorium ved Barbilla Nationalpark, dale og bjerge syd for Turrialba og Irazú vulkaner, Los Santos kaffe-regionen, og ned til Stillehavskysten i Quepos. Højeste punkt: 2,181m ved El Empalme.<br><br><strong>Bedste tid:</strong> Januar-Marts (tørsæson). <strong>VIGTIGT:</strong> Kræver seriøs planlægning - kontakt Mar a Mar Association for vejledning og påkrævet logistik. De tilbyder virtuelle tutorials med erfarne guider.<br><br><strong>Mar a Mar Association</strong>: Officiel NGO bag ruten (etableret 2016). Komplet info om etaper, kort og booking. <a href='https://caminodecostarica.org/' target='_blank' class='map-link'>🔗 Camino de Costa Rica</a>"
+                    },
+                    {
+                        title: "Diamante Waterfall Cave - Overnatning i Grotte (2 Dage)",
+                        text: "Sov bag et 26 meter højt vandfald i en naturlig grotte med køkken og soveplatforme! Beliggende i primær regn- og cloudskov mellem Dominical og San Isidro del General (35 min fra Dominical). Aktiviteter inkluderer rappelling ned ad de tvillingevandfaldet, klippe-udspring i de øvre pools, og svømning. Grotten har decideret toilet, rindende vand og brusere! Kræver stejl vandring op (stops undervejs for at lære om medicinske planter).<br><br><strong>OPDATERING:</strong> Nu drevet af <strong>Pacific Journeys Costa Rica</strong>. Det tidligere Tree of Life Tours tilbyder ikke længere denne tur. <a href='https://pacificjourneyscr.com/' target='_blank' class='map-link'>🔗 Pacific Journeys</a>"
+                    }
+                ],
+                hikes: [],
+                surf: { show: false, text: "" },
+                nature: "Disse ekspeditioner bringer jer dybt ind i Costa Ricas vildeste natur - langt fra turisme og ind i det ægte eventyr.",
+                music: "Ingen nightlife her - kun junglelyde, vandfald og stjerner.",
+                food: {
+                    break: ["Alle måltider inkluderet i pakker"],
+                    lunch: ["Campfire madlavning og lodge måltider"],
+                    dinner: ["Autentisk jungle cuisine"]
+                },
+                practical: {
+                    nights: "2-16 dage afhængig af ekspedition. Planlæg disse SEPARAT fra jeres hoved-rute.",
+                    budget: "<strong>Budget guide:</strong><br>• Pacuare Rafting 2D: $542-1,041<br>• Corcovado 2D: ~$200-350<br>• Chirripó 3D: ~$150-250 (permits + overnatning + mad)<br>• Camino 14D: Varierer ($800-2,000+ afhængig af support)<br>• Diamante Cave 2D: ~$150-250",
+                    notes: ["ALLE kræver FORHÅNDSBOOKING - måneder i forvejen!", "Fysisk krævende - vær i god form", "Pacuare og Corcovado har STRENG kapacitetsbegrænsning", "Chirripó permits frigives præcis 6 måneder før - vær klar!", "Camino kræver seriøs planlægning - kontakt Mar a Mar først"],
+                    timing: "Tørsæson (Dec-April) er KRITISK for disse ture. Regnsæson kan gøre dem farlige eller umulige. Book ALT så tidligt som muligt - disse fyldes op hurtigt!"
                 }
             }
         };
