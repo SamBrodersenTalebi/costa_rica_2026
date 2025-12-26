@@ -95,7 +95,7 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                flex-wrap: nowrap;
+                flex-wrap: nowrap !important;
                 gap: 1rem;
                 margin-left: 0;
                 padding: 0 1rem;
@@ -114,12 +114,10 @@
                 padding: 0.75rem 1rem;
             }
 
-            /* Single column grids */
-            .grid.md\:grid-cols-2 {
-                grid-template-columns: 1fr !important;
-            }
-
-            .grid.md\:grid-cols-3 {
+            /* Single column grids - all variants */
+            .grid.md\:grid-cols-2,
+            .grid.md\:grid-cols-3,
+            .grid.lg\:grid-cols-2 {
                 grid-template-columns: 1fr !important;
             }
 
@@ -138,10 +136,92 @@
             .p-8 {
                 padding: 1rem;
             }
+
+            /* Responsive Typography */
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            h2 {
+                font-size: 1.5rem !important;
+            }
+
+            #dest-title {
+                font-size: 1.75rem !important;
+            }
+
+            #dest-desc {
+                margin-left: 0 !important;
+                margin-top: 0.5rem;
+            }
+
+            /* Sidebar improvements */
+            aside {
+                max-height: 40vh;
+                border-bottom: 1px solid #e2e8f0;
+                border-right: none !important;
+                overflow-y: auto;
+                flex-shrink: 0;
+            }
+
+            /* Main container mobile fix */
+            main {
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            /* Content area adjustments */
+            .flex-1.overflow-y-auto {
+                height: auto;
+                max-height: none;
+            }
+
+            section.flex-1 {
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            /* Destination header */
+            .bg-white.px-8.py-6 {
+                padding: 1rem !important;
+            }
+
+            /* Top bar adjustments */
+            nav.bg-white {
+                height: auto;
+                min-height: 3.5rem;
+                padding: 0.5rem 0;
+            }
+
+            nav .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Icon and title adjustments */
+            .flex.items-center.gap-3 span {
+                font-size: 1.75rem;
+            }
+
+            /* Reduce gap in grids on mobile */
+            .grid.gap-6,
+            .grid.gap-8 {
+                gap: 1rem !important;
+            }
+
+            /* Space-y adjustments for better mobile spacing */
+            .space-y-8 > * + * {
+                margin-top: 1.5rem !important;
+            }
+
+            /* Food grid improvements */
+            .grid.md\:grid-cols-3 .bg-white {
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden bg-slate-50">
+<body class="min-h-screen md:h-screen flex flex-col md:overflow-hidden bg-slate-50">
 
     <!-- Topbar -->
     <nav class="bg-white border-b border-slate-200 h-16 flex-shrink-0 z-30 shadow-sm">
@@ -162,10 +242,10 @@
     </nav>
 
     <!-- Main Container -->
-    <main class="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full h-[calc(100vh-64px)] overflow-hidden">
+    <main class="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full md:h-[calc(100vh-64px)] overflow-hidden md:overflow-hidden">
         
         <!-- Sidebar Navigation -->
-        <aside class="w-full md:w-72 bg-white border-r border-slate-200 flex flex-col h-full overflow-y-auto scroller z-20">
+        <aside class="w-full md:w-72 bg-white border-r md:border-r border-b md:border-b-0 border-slate-200 flex flex-col md:h-full overflow-y-auto scroller z-20">
             <div class="p-5">
                 <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Vælg Rejserute</h2>
                 
@@ -206,7 +286,7 @@
         </aside>
 
         <!-- Content Area -->
-        <section class="flex-1 relative flex flex-col bg-slate-50 h-full overflow-hidden">
+        <section class="flex-1 relative flex flex-col bg-slate-50 md:h-full md:overflow-hidden">
             
             <!-- Empty State Placeholder -->
             <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-300 z-0">
@@ -230,7 +310,7 @@
                     </div>
 
                     <!-- Tabs -->
-                    <div class="flex gap-8 mt-6 ml-1 flex-wrap">
+                    <div class="flex gap-8 mt-6 ml-1">
                         <button onclick="switchTab('hotels')" id="tab-hotels" class="tab-btn active text-sm">🏨 Overnatning</button>
                         <button onclick="switchTab('activities')" id="tab-activities" class="tab-btn text-sm">🥾 Aktiviteter & Hikes</button>
                         <button onclick="switchTab('romantic')" id="tab-romantic" class="tab-btn text-sm">❤️ Romantik</button>
@@ -425,7 +505,8 @@
                 },
                 activities: [
                     { title: "Guldmuséet", text: "Underground museum med præcolumbiansk guld. <a href='"+gMap("Museo del Oro Precolombino")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Mercado Central", text: "Det centrale marked. Køb kaffe her! <a href='"+gMap("Mercado Central San Jose")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    { title: "Mercado Central", text: "Det centrale marked. Køb kaffe her! <a href='"+gMap("Mercado Central San Jose")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Alajuela Kaffeplantage Tur", text: "Besøg en af de mest berømte kaffeplantager i Central Valley (kun 20-30 min fra SJO). Guided tur med smagning, besøg sommerfuglehave og botanisk have. Perfekt dagstur fra San José! <a href='https://www.getyourguide.com/alajuela-l145894/coffee-experience-t439243/' target='_blank' class='map-link'>🔗 Book tur</a>" }
                 ],
                 hikes: [
                     {
@@ -490,7 +571,11 @@
                 activities: [
                     { title: "Mistico Hanging Bridges", text: "Gå på broer i trætoppene. <a href='"+gMap("Mistico Arenal Hanging Bridges Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
                     { title: "Rio Celeste", text: "Lyseblå flod/vandfald. <a href='"+gMap("Rio Celeste Waterfall")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "La Fortuna Vandfald", text: "Svøm ved vandfaldet. <a href='"+gMap("La Fortuna Waterfall")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    { title: "La Fortuna Vandfald", text: "Svøm ved vandfaldet. <a href='"+gMap("La Fortuna Waterfall")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Whitewater Rafting", text: "Spændende rafting på Sarapiqui River (Class III-IV) eller Balsa River (Class II-III). Velegnet til både begyndere og erfarne. <a href='"+gMap("Arenal Rafting La Fortuna")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Varme Kilder ved Arenal Vulkan", text: "<strong>Tabacon</strong> (naturlig flod, luksus), <strong>Baldi</strong> (25 pools, familievenlig), <strong>Los Lagos</strong> (budget $18), eller <strong>The Springs</strong> (mest luksuriøs). Book i forvejen! <a href='"+gMap("Tabacon Hot Springs")+"' target='_blank' class='map-link'>📍 Tabacon</a>" },
+                    { title: "Nattur i Junglen", text: "Se nataktive dyr som dovendyr, frøer, slanger og flagermus. Turen starter kl. 18-20 og varer 2 timer. Over 60% af Costa Ricas dyreliv er nataktivt! <a href='"+gMap("Night Tour La Fortuna")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Kaffetur med Smagning", text: "Besøg Don Juan Coffee Tours og lær om kaffe fra bønne til kop. Inkl. chokolade og sukkerrør. 2-2.5 timer. <a href='"+gMap("Don Juan Coffee Tour La Fortuna")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
                     {
@@ -569,7 +654,9 @@
                 },
                 activities: [
                     { title: "Selvatura Park", text: "Bedste Ziplines & Hængebroer. <a href='"+gMap("Selvatura Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "El Tigre Waterfalls", text: "Ridning og vandfald. <a href='"+gMap("El Tigre Waterfalls Monteverde")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    { title: "El Tigre Waterfalls", text: "Ridning og vandfald. <a href='"+gMap("El Tigre Waterfalls Monteverde")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Kaffetur med Smagning", text: "<strong>Café Monteverde</strong> (21 familiers kollektiv, ture kl. 8:30, 9:30 & 14:00) eller <strong>El Pueblo Coffee Tour</strong> (2.5 timer på familiegård med banankage). Monteverde er DET bedste sted til autentiske kaffeture! <a href='"+gMap("Cafe Monteverde")+"' target='_blank' class='map-link'>📍 Café Monteverde</a>" },
+                    { title: "Nattur i Tågeskoven", text: "Se nataktive dyr som vaskebjørne, taranteller, dovendyr, olingoer og kinkajous. Skoven kommer til live om natten med ræve, hugorme, edderkopper og frøer. <a href='"+gMap("Monteverde Night Walk")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
                     {
@@ -685,7 +772,9 @@
                 },
                 activities: [
                     { title: "Nationalparken", text: "$18 voksne, $5.65 børn. <strong>VIGTIGT: KUN online booking - ingen køb ved indgang!</strong> Åben Ons-Man 7am-4pm (lukket tirsdag). Ingen mad tilladt. Book 2-3 måneder i forvejen (feb-mar). <a href='"+gMap("Manuel Antonio National Park")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Spice Farm Tour", text: "Villa Vanilla (Vanilje farm). <a href='"+gMap("Villa Vanilla Spice Farm")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    { title: "Spice Farm Tour", text: "Villa Vanilla (Vanilje farm). <a href='"+gMap("Villa Vanilla Spice Farm")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Whitewater Rafting på Savegre River", text: "Perfekt for familier og begyndere! En af Central Amerikas reneste og smukkeste floder med milde rapids. 6-7 timers tur inkl. transport og frokost ved floden (~1 time fra Manuel Antonio). <a href='"+gMap("Savegre River Rafting Manuel Antonio")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Nattur i Junglen", text: "Manuel Antonio er det BEDSTE sted at se den berømte red-eyed tree frog! Kompakt park med høj koncentration af natdyr inkl. mange hugorme, slanger og frøer. <a href='"+gMap("Manuel Antonio Night Tour")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
                     {
@@ -740,7 +829,9 @@
                 },
                 activities: [
                     { title: "Jaguar Rescue Center", text: "Rehabilitering af dyr. $27/person (børn under 10 gratis). Tours Man-Lør kl. 9:30 & 11:30. 1.5 timers tur. <a href='"+gMap("Jaguar Rescue Center")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
-                    { title: "Ara Manzanillo", text: "Genudsætning af grønne papegøjer. <a href='"+gMap("Ara Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
+                    { title: "Ara Manzanillo", text: "Genudsætning af grønne papegøjer. <a href='"+gMap("Ara Manzanillo")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Chokoladetur hos Bribri", text: "Besøg den lokale Bribri-stamme og lær om traditionel chokoladeproduktion fra kakao til færdig chokolade. Autentisk kulturel oplevelse. <a href='"+gMap("Bribri Chocolate Tour Puerto Viejo")+"' target='_blank' class='map-link'>📍 Se kort</a>" },
+                    { title: "Nattur i Caribisk Regnskov", text: "Udforsk det caribiske natteliv med guide. Se frøer, hugorme, edderkopper, og det unikke mangrovemiljø. Caribisk regnskov har anderledes dyr end Stillehavskysten. <a href='"+gMap("Night Tour Puerto Viejo")+"' target='_blank' class='map-link'>📍 Se kort</a>" }
                 ],
                 hikes: [
                     {
