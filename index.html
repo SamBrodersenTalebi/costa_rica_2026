@@ -95,7 +95,7 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
-                flex-wrap: nowrap;
+                flex-wrap: nowrap !important;
                 gap: 1rem;
                 margin-left: 0;
                 padding: 0 1rem;
@@ -114,12 +114,10 @@
                 padding: 0.75rem 1rem;
             }
 
-            /* Single column grids */
-            .grid.md\:grid-cols-2 {
-                grid-template-columns: 1fr !important;
-            }
-
-            .grid.md\:grid-cols-3 {
+            /* Single column grids - all variants */
+            .grid.md\:grid-cols-2,
+            .grid.md\:grid-cols-3,
+            .grid.lg\:grid-cols-2 {
                 grid-template-columns: 1fr !important;
             }
 
@@ -138,10 +136,92 @@
             .p-8 {
                 padding: 1rem;
             }
+
+            /* Responsive Typography */
+            h1 {
+                font-size: 1.25rem;
+            }
+
+            h2 {
+                font-size: 1.5rem !important;
+            }
+
+            #dest-title {
+                font-size: 1.75rem !important;
+            }
+
+            #dest-desc {
+                margin-left: 0 !important;
+                margin-top: 0.5rem;
+            }
+
+            /* Sidebar improvements */
+            aside {
+                max-height: 40vh;
+                border-bottom: 1px solid #e2e8f0;
+                border-right: none !important;
+                overflow-y: auto;
+                flex-shrink: 0;
+            }
+
+            /* Main container mobile fix */
+            main {
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            /* Content area adjustments */
+            .flex-1.overflow-y-auto {
+                height: auto;
+                max-height: none;
+            }
+
+            section.flex-1 {
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            /* Destination header */
+            .bg-white.px-8.py-6 {
+                padding: 1rem !important;
+            }
+
+            /* Top bar adjustments */
+            nav.bg-white {
+                height: auto;
+                min-height: 3.5rem;
+                padding: 0.5rem 0;
+            }
+
+            nav .max-w-7xl {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            /* Icon and title adjustments */
+            .flex.items-center.gap-3 span {
+                font-size: 1.75rem;
+            }
+
+            /* Reduce gap in grids on mobile */
+            .grid.gap-6,
+            .grid.gap-8 {
+                gap: 1rem !important;
+            }
+
+            /* Space-y adjustments for better mobile spacing */
+            .space-y-8 > * + * {
+                margin-top: 1.5rem !important;
+            }
+
+            /* Food grid improvements */
+            .grid.md\:grid-cols-3 .bg-white {
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden bg-slate-50">
+<body class="min-h-screen md:h-screen flex flex-col md:overflow-hidden bg-slate-50">
 
     <!-- Topbar -->
     <nav class="bg-white border-b border-slate-200 h-16 flex-shrink-0 z-30 shadow-sm">
@@ -162,10 +242,10 @@
     </nav>
 
     <!-- Main Container -->
-    <main class="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full h-[calc(100vh-64px)] overflow-hidden">
+    <main class="flex-grow flex flex-col md:flex-row max-w-7xl mx-auto w-full md:h-[calc(100vh-64px)] overflow-hidden md:overflow-hidden">
         
         <!-- Sidebar Navigation -->
-        <aside class="w-full md:w-72 bg-white border-r border-slate-200 flex flex-col h-full overflow-y-auto scroller z-20">
+        <aside class="w-full md:w-72 bg-white border-r md:border-r border-b md:border-b-0 border-slate-200 flex flex-col md:h-full overflow-y-auto scroller z-20">
             <div class="p-5">
                 <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Vælg Rejserute</h2>
                 
@@ -206,7 +286,7 @@
         </aside>
 
         <!-- Content Area -->
-        <section class="flex-1 relative flex flex-col bg-slate-50 h-full overflow-hidden">
+        <section class="flex-1 relative flex flex-col bg-slate-50 md:h-full md:overflow-hidden">
             
             <!-- Empty State Placeholder -->
             <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-300 z-0">
@@ -230,7 +310,7 @@
                     </div>
 
                     <!-- Tabs -->
-                    <div class="flex gap-8 mt-6 ml-1 flex-wrap">
+                    <div class="flex gap-8 mt-6 ml-1">
                         <button onclick="switchTab('hotels')" id="tab-hotels" class="tab-btn active text-sm">🏨 Overnatning</button>
                         <button onclick="switchTab('activities')" id="tab-activities" class="tab-btn text-sm">🥾 Aktiviteter & Hikes</button>
                         <button onclick="switchTab('romantic')" id="tab-romantic" class="tab-btn text-sm">❤️ Romantik</button>
